@@ -1,0 +1,16 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ProjectorImage.shader">
+    <Files>
+      <File FileName="Assets/Scripts/FirstPerson.cs" Line="59" Column="34" />
+      <File FileName="Assets/Scripts/GameUI.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/WallController.cs" Line="1" Column="1" />
+      <File FileName="Assets/ProjectorImage.shader" Line="9" Column="7" />
+      <File FileName="Assets/WallShade.shader" Line="14" Column="20" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
