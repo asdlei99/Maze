@@ -10,3 +10,10 @@ public enum DirectionType{
 	Back,
 	None
 }
+
+public enum PaintType{
+	Paint0 = 0,
+	Paint1,
+	Paint2,
+	None
+}

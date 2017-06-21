@@ -3,11 +3,10 @@ using System.Collections;
 
 public class PaintProjectorController : MonoBehaviour {
 
-	private float nearDistance, farDistance, distanceTolerance = 0.5f;
+	private float nearDistance, distanceTolerance = 0.5f;
 
 	void Start () {
 		nearDistance = GetComponent<Projector> ().nearClipPlane;
-		farDistance = GetComponent<Projector> ().farClipPlane;
 
 		Ray mRay = new Ray (transform.position + transform.forward.normalized * nearDistance, transform.forward);
 		RaycastHit mHi;

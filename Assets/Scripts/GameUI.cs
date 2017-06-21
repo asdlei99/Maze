@@ -6,6 +6,7 @@ public class GameUI : MonoBehaviour {
 
 	[SerializeField]private FirstPerson firstPerson;
 	[SerializeField]private MapController mapController;
+	[SerializeField]private PaintPanelController paintController;
 
 	private const string PersonRockerPathName = "Canvas/PersonRocker/";
 	private const string GoForwardBtnName = "GoForwardBtn";
@@ -18,7 +19,7 @@ public class GameUI : MonoBehaviour {
 	private const string UpBtnName = "UpBtn";
 	private const string DownBtnName = "DownBtn";
 
-	private const string SignBtnName = "SignBtn";
+	private const string SignBtnName = "PaintBtn";
 
 	void Awake(){
 		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoForwardBtnName)).onDown = BtnOnDownListener;
@@ -39,6 +40,8 @@ public class GameUI : MonoBehaviour {
 //		ButtonEventListener.Get(GameObject.Find ("Canvas/" + DownBtnName)).onUp = BtnOnUpListener;
 
 		ButtonEventListener.Get(GameObject.Find ("Canvas/" + SignBtnName)).onClick = BtnOnClickListener;
+
+		paintController.seletPaintCallBack = CreatePaint;
 	}
 
 	void Start () {
@@ -104,7 +107,11 @@ public class GameUI : MonoBehaviour {
 
 	void BtnOnClickListener(GameObject obj){
 		if (obj.name == SignBtnName) {
-			mapController.CreateSign (firstPerson.m_chaTrans);
+			paintController.SetActive (true);
 		}
+	}
+
+	void CreatePaint(PaintType type){
+		mapController.Paint (firstPerson.m_chaTrans);
 	}
 }
