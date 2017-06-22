@@ -8,7 +8,10 @@ public class DefaultPanelController : PanelController {
 	[SerializeField]private MapController mapController;
 	[SerializeField]private PaintPanelController paintController;
 	[SerializeField]private SettingPanelController settingController;
+	[SerializeField]private EndPanelController endController;
+
 	[SerializeField]private GameObject viewRocker;
+	[SerializeField]private FinishTriggerController finishTriggerController;
 
 	private const string PersonRockerPathName = "Canvas/DefaultPanel/PersonRocker/";
 	private const string GoForwardBtnName = "GoForwardBtn";
@@ -52,6 +55,7 @@ public class DefaultPanelController : PanelController {
 
 		paintController.seletedPaint = CreatePaint;
 		settingController.settingValueChanged = SettingValueChanged;
+		finishTriggerController.playerEntered = GameEnd;
 	}
 
 	void Start () {
@@ -139,5 +143,9 @@ public class DefaultPanelController : PanelController {
 			}
 			break;
 		}
+	}
+
+	void GameEnd(){
+		endController.SetActive (true);
 	}
 }

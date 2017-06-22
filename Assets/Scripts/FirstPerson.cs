@@ -41,7 +41,7 @@ public class FirstPerson : MonoBehaviour {
 	public Transform m_chaTrans;
 
 	//摄像机旋转四元数  
-	private Quaternion m_camQutation;  
+//	private Quaternion m_camQutation;  
 	//主角的旋转四元数  
 	private Quaternion m_chaQutation;  
 
@@ -67,7 +67,7 @@ public class FirstPerson : MonoBehaviour {
 		m_chaTrans = transform;
 
 		//初始化参数  
-		m_camQutation = m_camTrans.rotation;
+//		m_camQutation = m_camTrans.rotation;
 		m_chaQutation = m_chaTrans.rotation;
 	}
 

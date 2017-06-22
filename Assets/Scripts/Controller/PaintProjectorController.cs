@@ -14,7 +14,7 @@ public class PaintProjectorController : MonoBehaviour {
 		if(Physics.Raycast(mRay,out mHi)){
 			float dist = mHi.distance + nearDistance;
 			if (dist <= maxDistance) {
-				GetComponent<Projector> ().farClipPlane = dist;
+				GetComponent<Projector> ().farClipPlane = dist + 1;
 			} else {
 				this.transform.rotation *= Quaternion.Euler (20f, 0f, 0f);
 				GetComponent<Projector> ().farClipPlane = maxDistance;

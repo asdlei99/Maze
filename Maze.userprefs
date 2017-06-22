@@ -1,13 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Compenents/Switch.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Controller/MainController.cs">
     <Files>
-      <File FileName="Assets/Scripts/FirstPerson.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GameUI.cs" Line="42" Column="65" />
-      <File FileName="Assets/Scripts/PaintPanelController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MazeType.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/WallController.cs" Line="4" Column="46" />
-      <File FileName="Assets/Scripts/Compenents/Switch.cs" Line="9" Column="19" />
+      <File FileName="Assets/Scripts/MazeType.cs" Line="17" Column="9" />
+      <File FileName="Assets/Scripts/Controller/SettingPanelController.cs" Line="16" Column="1" />
+      <File FileName="Assets/Scripts/DefaultPanelController.cs" Line="9" Column="63" />
+      <File FileName="Assets/Scripts/FinishTriggerController.cs" Line="19" Column="4" />
+      <File FileName="Assets/Scripts/Controller/MainController.cs" Line="10" Column="41" />
+      <File FileName="Assets/Scripts/Controller/LoadingController.cs" Line="29" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
