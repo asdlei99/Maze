@@ -56,7 +56,8 @@ public class FirstPerson : MonoBehaviour {
 	public DirectionType viewTurnDirection = DirectionType.None;
 	public DirectionType personMoveDirection = DirectionType.None;
 
-	public bool isUseRocker = false;
+	public bool isUseViewRocker = false;
+	public static bool isCouldViewTurn = true;
 
 	void Start () {  
 		m_capsule = GetComponent<CapsuleCollider>();
@@ -70,29 +71,31 @@ public class FirstPerson : MonoBehaviour {
 		m_chaQutation = m_chaTrans.rotation;
 	}
 
-	void Update () {  
-		//视角转动  
-		RotateView ();
+	void Update () {
+		//视角转动
+		if(isCouldViewTurn){
+			RotateView ();
+		}
 		DoMove ();
 	}  
 
 	void RotateView() {
-		if (isUseRocker) {
+		if (isUseViewRocker) {
 			switch (viewTurnDirection) {
 			case DirectionType.Left:
-				m_camQutation *= Quaternion.Euler (0f, -CameraSet.XSensitive, 0f);
+				m_chaQutation *= Quaternion.Euler (0f, -CameraSet.XSensitive * 0.5f, 0f);
 				break;
 			case DirectionType.Right:
-				m_camQutation *= Quaternion.Euler (0f, CameraSet.XSensitive, 0f);
+				m_chaQutation *= Quaternion.Euler (0f, CameraSet.XSensitive * 0.5f, 0f);
 				break;
 			case DirectionType.Up:
-				m_camQutation *= Quaternion.Euler (-1, 0f, 0f);
+				m_chaQutation *= Quaternion.Euler (-1, 0f, 0f);
 				break;
 			case DirectionType.Down:
-				m_camQutation *= Quaternion.Euler (1, 0f, 0f);
+				m_chaQutation *= Quaternion.Euler (1, 0f, 0f);
 				break;
 			}
-			m_camTrans.rotation = m_camQutation;
+			m_chaTrans.localRotation = m_chaQutation;
 		} else {
 			#if !UNITY_EDITOR
 			Touch turnTouch;
@@ -111,10 +114,6 @@ public class FirstPerson : MonoBehaviour {
 			float yRot = Input.GetAxis("Mouse X") * CameraSet.XSensitive;
 			//四元数使用
 			{
-//				m_camQutation *= Quaternion.Euler(0f, yRot, 0f);
-//				m_camQutation = ClampRotation(m_camQutation);
-//				m_camTrans.localRotation = m_camQutation;
-
 				m_chaQutation *= Quaternion.Euler(0f, yRot, 0f);
 				m_chaTrans.localRotation = m_chaQutation;
 			}

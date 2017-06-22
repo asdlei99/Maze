@@ -3,14 +3,14 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class PaintPanelController : MonoBehaviour, IPointerClickHandler {
+public class PaintPanelController : PanelController, IPointerClickHandler {
 
 	[SerializeField]private Button paint0;
 	[SerializeField]private Button paint1;
 	[SerializeField]private Button paint2;
 
-	public delegate void SelectedPaintCallBack(PaintType type); 
-	public SelectedPaintCallBack seletPaintCallBack;
+	public delegate void SelectedPaint(PaintType type); 
+	public SelectedPaint seletedPaint;
 
 	void Start () {
 		ButtonEventListener.Get(paint0.gameObject).onClick = BtnOnClickListener;
@@ -22,17 +22,15 @@ public class PaintPanelController : MonoBehaviour, IPointerClickHandler {
 	
 	}
 
-	public void SetActive(bool isActive){
-		this.gameObject.SetActive (isActive);
-	}
-
 	void BtnOnClickListener(GameObject obj){
-		if (obj.name == paint0.name) {
-			seletPaintCallBack (PaintType.Paint0);
-		} else if (obj.name == paint1.name) {
-			seletPaintCallBack (PaintType.Paint1);
-		} else if (obj.name == paint2.name) {
-			seletPaintCallBack (PaintType.Paint2);
+		if (seletedPaint != null) {
+			if (obj.name == paint0.name) {
+				seletedPaint (PaintType.Paint0);
+			} else if (obj.name == paint1.name) {
+				seletedPaint (PaintType.Paint1);
+			} else if (obj.name == paint2.name) {
+				seletedPaint (PaintType.Paint2);
+			}
 		}
 		SetActive (false);
 	}

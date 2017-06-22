@@ -17,3 +17,8 @@ public enum PaintType{
 	Paint2,
 	None
 }
+
+public enum SettingType{
+	ViewRocker = 0,
+	None
+}

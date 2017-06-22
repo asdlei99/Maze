@@ -46,14 +46,18 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\ButtonEventListener.cs" />
+     <Compile Include="Assets\Scripts\Compenents\CloseBtn.cs" />
+     <Compile Include="Assets\Scripts\Compenents\Switch.cs" />
+     <Compile Include="Assets\Scripts\Controller\MapController.cs" />
+     <Compile Include="Assets\Scripts\Controller\PaintPanelController.cs" />
+     <Compile Include="Assets\Scripts\Controller\PaintProjectorController.cs" />
+     <Compile Include="Assets\Scripts\Controller\PanelController.cs" />
+     <Compile Include="Assets\Scripts\Controller\SettingPanelController.cs" />
+     <Compile Include="Assets\Scripts\Controller\WallController.cs" />
+     <Compile Include="Assets\Scripts\DefaultPanelController.cs" />
      <Compile Include="Assets\Scripts\FirstPerson.cs" />
-     <Compile Include="Assets\Scripts\GameUI.cs" />
-     <Compile Include="Assets\Scripts\MapController.cs" />
      <Compile Include="Assets\Scripts\MazeTool.cs" />
      <Compile Include="Assets\Scripts\MazeType.cs" />
-     <Compile Include="Assets\Scripts\PaintPanelController.cs" />
-     <Compile Include="Assets\Scripts\PaintProjectorController.cs" />
-     <Compile Include="Assets\Scripts\WallController.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />

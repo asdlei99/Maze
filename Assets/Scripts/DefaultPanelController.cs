@@ -2,24 +2,30 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class GameUI : MonoBehaviour {
+public class DefaultPanelController : PanelController {
 
 	[SerializeField]private FirstPerson firstPerson;
 	[SerializeField]private MapController mapController;
 	[SerializeField]private PaintPanelController paintController;
+	[SerializeField]private SettingPanelController settingController;
+	[SerializeField]private GameObject viewRocker;
 
-	private const string PersonRockerPathName = "Canvas/PersonRocker/";
+	private const string PersonRockerPathName = "Canvas/DefaultPanel/PersonRocker/";
 	private const string GoForwardBtnName = "GoForwardBtn";
 	private const string GoBackBtnName = "GoBackBtn";
 	private const string GoLeftBtnName = "GoLeftBtn";
 	private const string GoRightBtnName = "GoRightBtn";
 
+	private const string ViewRockerPathName = "Canvas/DefaultPanel/ViewRocker/";
 	private const string LeftBtnName = "LeftBtn";
 	private const string RightBtnName = "RightBtn";
 	private const string UpBtnName = "UpBtn";
 	private const string DownBtnName = "DownBtn";
 
-	private const string SignBtnName = "PaintBtn";
+	private const string PaintBtnName = "PaintBtn";
+
+	private const string BannerName = "Canvas/DefaultPanel/Banner/";
+	private const string SettingBtnName = "SettingBtn";
 
 	void Awake(){
 		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoForwardBtnName)).onDown = BtnOnDownListener;
@@ -30,18 +36,22 @@ public class GameUI : MonoBehaviour {
 		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoLeftBtnName)).onUp = BtnOnUpListener;
 		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoRightBtnName)).onDown = BtnOnDownListener;
 		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoRightBtnName)).onUp = BtnOnUpListener;
-//		ButtonEventListener.Get(GameObject.Find ("Canvas/" + LeftBtnName)).onDown = BtnOnDownListener;
-//		ButtonEventListener.Get(GameObject.Find ("Canvas/" + LeftBtnName)).onUp = BtnOnUpListener;
-//		ButtonEventListener.Get(GameObject.Find ("Canvas/" + RightBtnName)).onDown = BtnOnDownListener;
-//		ButtonEventListener.Get(GameObject.Find ("Canvas/" + RightBtnName)).onUp = BtnOnUpListener;
-//		ButtonEventListener.Get(GameObject.Find ("Canvas/" + UpBtnName)).onDown = BtnOnDownListener;
-//		ButtonEventListener.Get(GameObject.Find ("Canvas/" + UpBtnName)).onUp = BtnOnUpListener;
-//		ButtonEventListener.Get(GameObject.Find ("Canvas/" + DownBtnName)).onDown = BtnOnDownListener;
-//		ButtonEventListener.Get(GameObject.Find ("Canvas/" + DownBtnName)).onUp = BtnOnUpListener;
 
-		ButtonEventListener.Get(GameObject.Find ("Canvas/" + SignBtnName)).onClick = BtnOnClickListener;
+		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + LeftBtnName)).onDown = BtnOnDownListener;
+		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + LeftBtnName)).onUp = BtnOnUpListener;
+		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + RightBtnName)).onDown = BtnOnDownListener;
+		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + RightBtnName)).onUp = BtnOnUpListener;
+		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + UpBtnName)).onDown = BtnOnDownListener;
+		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + UpBtnName)).onUp = BtnOnUpListener;
+		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + DownBtnName)).onDown = BtnOnDownListener;
+		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + DownBtnName)).onUp = BtnOnUpListener;
+		viewRocker.SetActive (false);
 
-		paintController.seletPaintCallBack = CreatePaint;
+		ButtonEventListener.Get(GameObject.Find ("Canvas/DefaultPanel/" + PaintBtnName)).onClick = BtnOnClickListener;
+		ButtonEventListener.Get(GameObject.Find (BannerName + SettingBtnName)).onClick = BtnOnClickListener;
+
+		paintController.seletedPaint = CreatePaint;
+		settingController.settingValueChanged = SettingValueChanged;
 	}
 
 	void Start () {
@@ -106,12 +116,28 @@ public class GameUI : MonoBehaviour {
 	}
 
 	void BtnOnClickListener(GameObject obj){
-		if (obj.name == SignBtnName) {
+		if (obj.name == PaintBtnName) {
 			paintController.SetActive (true);
+		}else if(obj.name == SettingBtnName){
+			settingController.SetActive (true);
 		}
 	}
 
 	void CreatePaint(PaintType type){
 		mapController.Paint (firstPerson.m_chaTrans);
+	}
+
+	void SettingValueChanged(SettingType type, bool value){
+		switch (type) {
+		case SettingType.ViewRocker:
+			if (value) {
+				viewRocker.SetActive (true);
+				firstPerson.isUseViewRocker = true;
+			} else {
+				viewRocker.SetActive (false);
+				firstPerson.isUseViewRocker = false;
+			}
+			break;
+		}
 	}
 }

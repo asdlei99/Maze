@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PaintProjectorController : MonoBehaviour {
 
-	private float nearDistance, distanceTolerance = 0.5f;
+	private float nearDistance, maxDistance = 9f;
 
 	void Start () {
 		nearDistance = GetComponent<Projector> ().nearClipPlane;
@@ -13,8 +13,12 @@ public class PaintProjectorController : MonoBehaviour {
 		//判断是否击中了什么
 		if(Physics.Raycast(mRay,out mHi)){
 			float dist = mHi.distance + nearDistance;
-			GetComponent<Projector> ().nearClipPlane =  Mathf.Max(dist - distanceTolerance, 0);
-			GetComponent<Projector> ().farClipPlane = dist + distanceTolerance;
+			if (dist <= maxDistance) {
+				GetComponent<Projector> ().farClipPlane = dist;
+			} else {
+				this.transform.rotation *= Quaternion.Euler (20f, 0f, 0f);
+				GetComponent<Projector> ().farClipPlane = maxDistance;
+			}
 		}
 	}
 }
