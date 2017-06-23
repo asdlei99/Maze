@@ -41,7 +41,7 @@ public class FirstPerson : MonoBehaviour {
 	public Transform m_chaTrans;
 
 	//摄像机旋转四元数  
-//	private Quaternion m_camQutation;  
+	private Quaternion m_camQutation;  
 	//主角的旋转四元数  
 	private Quaternion m_chaQutation;  
 
@@ -67,8 +67,8 @@ public class FirstPerson : MonoBehaviour {
 		m_chaTrans = transform;
 
 		//初始化参数  
-//		m_camQutation = m_camTrans.rotation;
 		m_chaQutation = m_chaTrans.rotation;
+		m_camQutation = m_camTrans.localRotation;
 	}
 
 	void Update () {
@@ -84,18 +84,23 @@ public class FirstPerson : MonoBehaviour {
 			switch (viewTurnDirection) {
 			case DirectionType.Left:
 				m_chaQutation *= Quaternion.Euler (0f, -CameraSet.XSensitive * 0.5f, 0f);
+				m_chaTrans.rotation = m_chaQutation;
 				break;
 			case DirectionType.Right:
 				m_chaQutation *= Quaternion.Euler (0f, CameraSet.XSensitive * 0.5f, 0f);
+				m_chaTrans.rotation = m_chaQutation;
 				break;
 			case DirectionType.Up:
-				m_chaQutation *= Quaternion.Euler (-1, 0f, 0f);
+				m_camQutation *= Quaternion.Euler (-1, 0f, 0f);
+				m_camTrans.localRotation = m_camQutation;
 				break;
 			case DirectionType.Down:
-				m_chaQutation *= Quaternion.Euler (1, 0f, 0f);
+				m_camQutation *= Quaternion.Euler (1, 0f, 0f);
+				m_camTrans.localRotation = m_camQutation;
 				break;
 			}
-			m_chaTrans.localRotation = m_chaQutation;
+
+
 		} else {
 			#if !UNITY_EDITOR
 			Touch turnTouch;
@@ -107,15 +112,23 @@ public class FirstPerson : MonoBehaviour {
 			//手指在屏幕上移动，移动摄像机
 			if (turnTouch.phase == TouchPhase.Moved) {
 				m_chaQutation *= Quaternion.Euler (0f, turnTouch.deltaPosition.x * Time.deltaTime * CameraSet.XSensitive, 0f);
-				m_chaQutation = ClampRotation (m_chaQutation);
 				m_chaTrans.rotation = m_chaQutation;
+
+				m_camQutation *= Quaternion.Euler (-turnTouch.deltaPosition.y * Time.deltaTime * CameraSet.YSensitive, 0f, 0f);
+				m_camQutation = ClampRotation (m_camQutation);
+				m_camTrans.localRotation = m_camQutation;
 			}
 			#else
 			float yRot = Input.GetAxis("Mouse X") * CameraSet.XSensitive;
+			float xRot = Input.GetAxis("Mouse Y") * CameraSet.YSensitive;
 			//四元数使用
 			{
 				m_chaQutation *= Quaternion.Euler(0f, yRot, 0f);
 				m_chaTrans.localRotation = m_chaQutation;
+
+				m_camQutation *= Quaternion.Euler (-xRot, 0f, 0f);
+				m_camQutation = ClampRotation (m_camQutation);
+				m_camTrans.localRotation = m_camQutation;
 			}
 			#endif
 		}
@@ -133,13 +146,13 @@ public class FirstPerson : MonoBehaviour {
 				Vector3 desireMove;
 
 				if (personMoveDirection == DirectionType.Back) {
-					desireMove = m_camTrans.forward * -1 + m_camTrans.right * 0;
+					desireMove = m_chaTrans.forward * -1 + m_chaTrans.right * 0;
 				} else if (personMoveDirection == DirectionType.Left) {
-					desireMove = m_camTrans.forward * 0 + m_camTrans.right * -1;
+					desireMove = m_chaTrans.forward * 0 + m_chaTrans.right * -1;
 				} else if (personMoveDirection == DirectionType.Right) {
-					desireMove = m_camTrans.forward * 0 + m_camTrans.right * 1;
+					desireMove = m_chaTrans.forward * 0 + m_chaTrans.right * 1;
 				} else {
-					desireMove = m_camTrans.forward * 1 + m_camTrans.right * 0;
+					desireMove = m_chaTrans.forward * 1 + m_chaTrans.right * 0;
 				}
 
 				//力在地面投影的向量的（单位向量）
@@ -215,7 +228,7 @@ w = cos(Y/2)cos(Z/2)cos(X/2)-sin(Y/2)sin(Z/2)sin(X/2)
 		//得到推导公式[欧拉角x=2*Aan(q.x)]  
 		float angle = 2 * Mathf.Rad2Deg * Mathf.Atan (q.x);  
 		//限制速度  
-		angle = Mathf.Clamp (angle, -90f, 90f);  
+		angle = Mathf.Clamp (angle, -70f, 70f);  
 		//反推出q的新x的值  
 		q.x = Mathf.Tan (Mathf.Deg2Rad * (angle / 2));  
 
