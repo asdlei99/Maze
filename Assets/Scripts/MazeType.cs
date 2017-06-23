@@ -20,5 +20,6 @@ public enum PaintType{
 
 public enum SettingType{
 	ViewRocker = 0,
+	Audio,
 	None
 }

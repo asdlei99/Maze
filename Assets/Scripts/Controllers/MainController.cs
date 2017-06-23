@@ -9,9 +9,15 @@ public class MainController : MonoBehaviour {
 		GameObject.Find ("StartBtn").GetComponent<Button> ().onClick.AddListener (delegate {
 			SceneManager.LoadSceneAsync ("Loading");
 		});
+
+		SettingInfo.Instance.Init();
 	}
 	
 	void Update () {
 	
+	}
+
+	void OnApplicationQuit(){
+		SettingInfo.Instance.Save();
 	}
 }

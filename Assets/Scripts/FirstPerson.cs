@@ -23,6 +23,10 @@ public class FirstPerson : MonoBehaviour {
 		public float YSensitive = 2f;
 	}
 
+	[SerializeField] private AudioClip m_footstepSound;
+	[SerializeField] private float m_StepInterval;
+	[SerializeField]private Camera m_camera;  
+
 	public MoveSetting moveSet;  
 	public MouseLook CameraSet;  
 
@@ -34,11 +38,10 @@ public class FirstPerson : MonoBehaviour {
 	//第一人称，刚体  
 	private Rigidbody m_rigidbody;  
 
-	[SerializeField]private Camera m_camera;  
 	//相机的Transform（减少Update中transform的调用）  
 	private Transform m_camTrans;  
 	//主角的Transform  
-	public Transform m_chaTrans;
+	[HideInInspector]public Transform m_chaTrans;
 
 	//摄像机旋转四元数  
 	private Quaternion m_camQutation;  
@@ -46,18 +49,23 @@ public class FirstPerson : MonoBehaviour {
 	private Quaternion m_chaQutation;  
 
 	//爬坡的速度曲线  
-	public AnimationCurve SlopCurve;  
+//	public AnimationCurve SlopCurve;  
 
 	//是否在地面上  
 	private bool m_isOnGround;  
 	//地面法线向量  
 	private Vector3 curGroundNormal;
 
-	public DirectionType viewTurnDirection = DirectionType.None;
-	public DirectionType personMoveDirection = DirectionType.None;
+	private AudioSource m_AudioSource;
 
-	public bool isUseViewRocker = false;
-	public static bool isCouldViewTurn = true;
+	[HideInInspector]public DirectionType viewTurnDirection = DirectionType.None;
+	[HideInInspector]public DirectionType personMoveDirection = DirectionType.None;
+
+	[HideInInspector]public bool isUseViewRocker = false;
+	[HideInInspector]public static bool isCouldViewTurn = true;
+
+	private float m_StepCycle;
+	private float m_NextStep;
 
 	void Start () {  
 		m_capsule = GetComponent<CapsuleCollider>();
@@ -69,6 +77,11 @@ public class FirstPerson : MonoBehaviour {
 		//初始化参数  
 		m_chaQutation = m_chaTrans.rotation;
 		m_camQutation = m_camTrans.localRotation;
+
+		m_AudioSource = GetComponent<AudioSource>();
+
+		m_StepCycle = 0f;
+		m_NextStep = m_StepCycle/2f;
 	}
 
 	void Update () {
@@ -76,8 +89,11 @@ public class FirstPerson : MonoBehaviour {
 		if(isCouldViewTurn){
 			RotateView ();
 		}
-		DoMove ();
 	}  
+
+	private void FixedUpdate() {
+		DoMove ();
+	}
 
 	void RotateView() {
 		if (isUseViewRocker) {
@@ -161,6 +177,7 @@ public class FirstPerson : MonoBehaviour {
 				desireMove.y = 0;
 				desireMove.z = desireMove.z * currentSpeed;
 
+				ProgressStepCycle(currentSpeed);
 				//当前速度不能大于规定速度（Magnitude方法，需要开平方根，使用sqr节省运算）  
 				if (m_rigidbody.velocity.sqrMagnitude < currentSpeed * currentSpeed) {
 					//给刚体施加（坡度计算后）的力  
@@ -208,7 +225,28 @@ public class FirstPerson : MonoBehaviour {
 				m_rigidbody.velocity = new Vector3 (m_rigidbody.velocity.x, speed, m_rigidbody.velocity.z);  
 			}  
 		}  
-	} 
+	}
+
+	private void ProgressStepCycle(float speed) {
+		if (m_rigidbody.velocity.sqrMagnitude > 0) {
+			m_StepCycle += (m_rigidbody.velocity.magnitude + speed) * Time.fixedDeltaTime;
+		}
+
+		if (!(m_StepCycle > m_NextStep)) {
+			return;
+		}
+
+		m_NextStep = m_StepCycle + m_StepInterval;
+
+		if (SettingInfo.Instance.isOpenAudio) {
+			PlayFootStepAudio ();
+		}
+	}
+
+	private void PlayFootStepAudio(){
+		m_AudioSource.clip = m_footstepSound;
+		m_AudioSource.Play();
+	}
 
 	//四元数俯角，仰角限制  限制旋转角度在【-90，90】内
 	Quaternion ClampRotation(Quaternion q) {  

@@ -44,10 +44,10 @@ public class LoadingController : MonoBehaviour {
 		//也就是说progress可能是0.9的时候就直接进入新场景了
 		//所以在写进度条的时候需要注意一下。
 		//为了计算百分比 所以直接乘以100即可
-		progress = (int)(async.progress * 100);
+//		progress = (int)(async.progress * 100);
 
 		//有了读取进度的数值，大家可以自行制作进度条啦。
-		Debug.Log ("xuanyusong" + progress);
+//		Debug.Log ("xuanyusong" + progress);
 	}
 
 	//这是一个简单绘制2D动画的方法，没什么好说的。

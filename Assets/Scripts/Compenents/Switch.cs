@@ -15,6 +15,9 @@ public class Switch : MonoBehaviour {
 	void Start(){
 		closePosition = btn.transform.localPosition;
 		openPosition = closePosition + Vector3.right * GetComponent<RectTransform> ().sizeDelta.x * 0.5f;
+		if (isOpen) {
+			Open ();
+		}
 
 		bg.onClick.AddListener (delegate {
 			SwicthClicked();

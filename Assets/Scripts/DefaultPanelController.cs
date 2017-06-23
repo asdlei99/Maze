@@ -48,7 +48,9 @@ public class DefaultPanelController : PanelController {
 		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + UpBtnName)).onUp = BtnOnUpListener;
 		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + DownBtnName)).onDown = BtnOnDownListener;
 		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + DownBtnName)).onUp = BtnOnUpListener;
-		viewRocker.SetActive (false);
+		if (!SettingInfo.Instance.isOpenViewRocker) {
+			viewRocker.SetActive (false);
+		}
 
 		ButtonEventListener.Get(GameObject.Find ("Canvas/DefaultPanel/" + PaintBtnName)).onClick = BtnOnClickListener;
 		ButtonEventListener.Get(GameObject.Find (BannerName + SettingBtnName)).onClick = BtnOnClickListener;
@@ -141,11 +143,19 @@ public class DefaultPanelController : PanelController {
 				viewRocker.SetActive (false);
 				firstPerson.isUseViewRocker = false;
 			}
+			SettingInfo.Instance.isOpenViewRocker = value;
+			break;
+		case SettingType.Audio:
+			SettingInfo.Instance.isOpenAudio = value;
 			break;
 		}
 	}
 
 	void GameEnd(){
 		endController.SetActive (true);
+	}
+
+	void OnApplicationQuit(){
+		SettingInfo.Instance.Save();
 	}
 }
