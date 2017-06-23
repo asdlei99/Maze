@@ -17,7 +17,10 @@ public class MainController : MonoBehaviour {
 	
 	}
 
-	void OnApplicationQuit(){
-		SettingInfo.Instance.Save();
+	void OnApplicationPause(){
+		SettingInfo.Instance.Save ();
+	}
+
+	void OnApplicationQuit() {
 	}
 }

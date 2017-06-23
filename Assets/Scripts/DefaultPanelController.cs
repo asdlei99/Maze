@@ -155,7 +155,10 @@ public class DefaultPanelController : PanelController {
 		endController.SetActive (true);
 	}
 
-	void OnApplicationQuit(){
-		SettingInfo.Instance.Save();
+	void OnApplicationPause(){
+		SettingInfo.Instance.Save ();
+	}
+
+	void OnApplicationQuit() {
 	}
 }

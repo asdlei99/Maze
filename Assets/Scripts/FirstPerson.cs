@@ -119,18 +119,20 @@ public class FirstPerson : MonoBehaviour {
 
 		} else {
 			#if !UNITY_EDITOR
-			Touch turnTouch;
+			int touchIndex = 0;
+			bool isNeedTurn = false;
 			if (personMoveDirection != DirectionType.None && Input.touchCount > 1) {
-				turnTouch = Input.touches [1];
-			} else {
-				turnTouch = Input.touches [0];
+				touchIndex = 1;
+				isNeedTurn = true;
+			} else if(Input.touchCount == 1){
+				isNeedTurn = true;
 			}
 			//手指在屏幕上移动，移动摄像机
-			if (turnTouch.phase == TouchPhase.Moved) {
-				m_chaQutation *= Quaternion.Euler (0f, turnTouch.deltaPosition.x * Time.deltaTime * CameraSet.XSensitive, 0f);
+			if (isNeedTurn && Input.touches [touchIndex].phase == TouchPhase.Moved) {
+				m_chaQutation *= Quaternion.Euler (0f, Input.touches [touchIndex].deltaPosition.x * Time.deltaTime * CameraSet.XSensitive, 0f);
 				m_chaTrans.rotation = m_chaQutation;
 
-				m_camQutation *= Quaternion.Euler (-turnTouch.deltaPosition.y * Time.deltaTime * CameraSet.YSensitive, 0f, 0f);
+				m_camQutation *= Quaternion.Euler (-Input.touches [touchIndex].deltaPosition.y * Time.deltaTime * CameraSet.YSensitive, 0f, 0f);
 				m_camQutation = ClampRotation (m_camQutation);
 				m_camTrans.localRotation = m_camQutation;
 			}
