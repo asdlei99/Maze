@@ -10,8 +10,10 @@ public class DefaultPanelController : PanelController {
 	[SerializeField]private SettingPanelController settingController;
 	[SerializeField]private EndPanelController endController;
 
-	[SerializeField]private GameObject viewRocker;
+	[SerializeField]private RockerController viewRocker;
 	[SerializeField]private FinishTriggerController finishTriggerController;
+
+	[HideInInspector]public bool isUseViewRocker = false;
 
 	private const string PersonRockerPathName = "Canvas/DefaultPanel/PersonRocker/";
 	private const string GoForwardBtnName = "GoForwardBtn";
@@ -19,45 +21,37 @@ public class DefaultPanelController : PanelController {
 	private const string GoLeftBtnName = "GoLeftBtn";
 	private const string GoRightBtnName = "GoRightBtn";
 
-	private const string ViewRockerPathName = "Canvas/DefaultPanel/ViewRocker/";
-	private const string LeftBtnName = "LeftBtn";
-	private const string RightBtnName = "RightBtn";
-	private const string UpBtnName = "UpBtn";
-	private const string DownBtnName = "DownBtn";
-
 	private const string PaintBtnName = "PaintBtn";
 
 	private const string BannerName = "Canvas/DefaultPanel/Banner/";
 	private const string SettingBtnName = "SettingBtn";
 
-	void Awake(){
-		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoForwardBtnName)).onDown = BtnOnDownListener;
-		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoForwardBtnName)).onUp = BtnOnUpListener;
-		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoBackBtnName)).onDown = BtnOnDownListener;
-		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoBackBtnName)).onUp = BtnOnUpListener;
-		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoLeftBtnName)).onDown = BtnOnDownListener;
-		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoLeftBtnName)).onUp = BtnOnUpListener;
-		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoRightBtnName)).onDown = BtnOnDownListener;
-		ButtonEventListener.Get(GameObject.Find (PersonRockerPathName + GoRightBtnName)).onUp = BtnOnUpListener;
+	private bool isViewRocker = false;
+	[HideInInspector]public static bool isCouldViewTurn = true;
 
-		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + LeftBtnName)).onDown = BtnOnDownListener;
-		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + LeftBtnName)).onUp = BtnOnUpListener;
-		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + RightBtnName)).onDown = BtnOnDownListener;
-		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + RightBtnName)).onUp = BtnOnUpListener;
-		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + UpBtnName)).onDown = BtnOnDownListener;
-		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + UpBtnName)).onUp = BtnOnUpListener;
-		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + DownBtnName)).onDown = BtnOnDownListener;
-		ButtonEventListener.Get(GameObject.Find (ViewRockerPathName + DownBtnName)).onUp = BtnOnUpListener;
+	void Awake(){
+		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoForwardBtnName)).onDown = BtnOnDownListener;
+		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoForwardBtnName)).onUp = BtnOnUpListener;
+		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoBackBtnName)).onDown = BtnOnDownListener;
+		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoBackBtnName)).onUp = BtnOnUpListener;
+		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoLeftBtnName)).onDown = BtnOnDownListener;
+		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoLeftBtnName)).onUp = BtnOnUpListener;
+		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoRightBtnName)).onDown = BtnOnDownListener;
+		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoRightBtnName)).onUp = BtnOnUpListener;
+
 		if (!SettingInfo.Instance.isOpenViewRocker) {
-			viewRocker.SetActive (false);
+			viewRocker.gameObject.SetActive (false);
 		}
 
-		ButtonEventListener.Get(GameObject.Find ("Canvas/DefaultPanel/" + PaintBtnName)).onClick = BtnOnClickListener;
-		ButtonEventListener.Get(GameObject.Find (BannerName + SettingBtnName)).onClick = BtnOnClickListener;
+		GBEventListener.Get(GameObject.Find ("Canvas/DefaultPanel/" + PaintBtnName)).onClick = BtnOnClickListener;
+		GBEventListener.Get(GameObject.Find (BannerName + SettingBtnName)).onClick = BtnOnClickListener;
 
 		paintController.seletedPaint = CreatePaint;
 		settingController.settingValueChanged = SettingValueChanged;
 		finishTriggerController.playerEntered = GameEnd;
+
+		viewRocker.rockerStart = ViewRockerStart;
+		viewRocker.rockerEnd = ViewRockerEnd;
 	}
 
 	void Start () {
@@ -91,6 +85,36 @@ public class DefaultPanelController : PanelController {
 		if(Input.GetKeyUp (KeyCode.D)){
 			firstPerson.personMoveDirection = DirectionType.None;
 		}
+
+		if (isCouldViewTurn) {
+			CheckViewRotate ();
+		}
+
+//		Vector3 vecMove = viewRocker.MovePosiNorm*Time.deltaTime*moveSpeed/10;  
+//		_mTransform.localPosition+=vecMove;  
+//		float angle = Mathf.Atan2 (viewRocker.MovePosiNorm.x, viewRocker.MovePosiNorm.z) * Mathf.Rad2Deg - 10;  
+//		_mTransform.localRotation = Quaternion.Euler(Vector3.up*angle);
+	}
+
+	void CheckViewRotate(){
+		if (isUseViewRocker) {
+			if (isViewRocker) {
+				firstPerson.RotateView (viewRocker.MovePosiNorm.x / 2.5f, viewRocker.MovePosiNorm.z / 2.5f);
+			}
+		} else {
+			int touchIndex = 0;
+			bool isNeedTurn = false;
+			if (firstPerson.personMoveDirection != DirectionType.None && Input.touchCount > 1) {
+				touchIndex = 1;
+				isNeedTurn = true;
+			} else if (Input.touchCount == 1) {
+				isNeedTurn = true;
+			}
+			//手指在屏幕上移动，移动摄像机
+			if (isNeedTurn && Input.touches [touchIndex].phase == TouchPhase.Moved) {
+				firstPerson.RotateView (Input.touches [touchIndex].deltaPosition.x * Time.deltaTime, Input.touches [touchIndex].deltaPosition.y * Time.deltaTime);
+			}
+		}
 	}
 
 	void BtnOnDownListener(GameObject obj){
@@ -102,22 +126,12 @@ public class DefaultPanelController : PanelController {
 			firstPerson.personMoveDirection = DirectionType.Left;
 		}else if(obj.name == GoRightBtnName){
 			firstPerson.personMoveDirection = DirectionType.Right;
-		}else if(obj.name == LeftBtnName){
-			firstPerson.viewTurnDirection = DirectionType.Left;
-		}else if(obj.name == RightBtnName){
-			firstPerson.viewTurnDirection = DirectionType.Right;
-		}else if(obj.name == UpBtnName){
-			firstPerson.viewTurnDirection = DirectionType.Up;
-		}else if(obj.name == DownBtnName){
-			firstPerson.viewTurnDirection = DirectionType.Down;
 		}
 	}
 
 	void BtnOnUpListener(GameObject obj){
 		if (obj.name == GoForwardBtnName || obj.name == GoBackBtnName || obj.name == GoLeftBtnName || obj.name == GoRightBtnName) {
 			firstPerson.personMoveDirection = DirectionType.None;
-		}else if (obj.name == LeftBtnName || obj.name == RightBtnName || obj.name == UpBtnName || obj.name == DownBtnName) {
-			firstPerson.viewTurnDirection = DirectionType.None;
 		}
 	}
 
@@ -137,11 +151,11 @@ public class DefaultPanelController : PanelController {
 		switch (type) {
 		case SettingType.ViewRocker:
 			if (value) {
-				viewRocker.SetActive (true);
-				firstPerson.isUseViewRocker = true;
+				viewRocker.gameObject.SetActive (true);
+				isUseViewRocker = true;
 			} else {
-				viewRocker.SetActive (false);
-				firstPerson.isUseViewRocker = false;
+				viewRocker.gameObject.SetActive (false);
+				isUseViewRocker = false;
 			}
 			SettingInfo.Instance.isOpenViewRocker = value;
 			break;
@@ -153,6 +167,14 @@ public class DefaultPanelController : PanelController {
 
 	void GameEnd(){
 		endController.SetActive (true);
+	}
+
+	void ViewRockerStart(){
+		isViewRocker = true;
+	}
+
+	void ViewRockerEnd(){
+		isViewRocker = false;
 	}
 
 	void OnApplicationPause(){

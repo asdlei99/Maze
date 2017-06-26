@@ -45,7 +45,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\ButtonEventListener.cs" />
      <Compile Include="Assets\Scripts\Compenents\CloseBtn.cs" />
      <Compile Include="Assets\Scripts\Compenents\Switch.cs" />
      <Compile Include="Assets\Scripts\Controllers\EndPanelController.cs" />
@@ -55,11 +54,13 @@
      <Compile Include="Assets\Scripts\Controllers\PaintPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\PaintProjectorController.cs" />
      <Compile Include="Assets\Scripts\Controllers\PanelController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\RockerController.cs" />
      <Compile Include="Assets\Scripts\Controllers\SettingPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\WallController.cs" />
      <Compile Include="Assets\Scripts\DefaultPanelController.cs" />
      <Compile Include="Assets\Scripts\FinishTriggerController.cs" />
      <Compile Include="Assets\Scripts\FirstPerson.cs" />
+     <Compile Include="Assets\Scripts\GBEventListener.cs" />
      <Compile Include="Assets\Scripts\MazeTool.cs" />
      <Compile Include="Assets\Scripts\MazeType.cs" />
      <Compile Include="Assets\Scripts\Models\Player.cs" />

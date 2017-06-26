@@ -2,8 +2,9 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 	
-public class ButtonEventListener : UnityEngine.EventSystems.EventTrigger{
+public class GBEventListener : UnityEngine.EventSystems.EventTrigger{
 	public delegate void VoidDelegate (GameObject go);
+	public delegate void VectorDelegate(GameObject go, Vector2 delta);
 	public VoidDelegate onClick;
 	public VoidDelegate onDown;
 	public VoidDelegate onEnter;
@@ -11,10 +12,14 @@ public class ButtonEventListener : UnityEngine.EventSystems.EventTrigger{
 	public VoidDelegate onUp;
 	public VoidDelegate onSelect;
 	public VoidDelegate onUpdateSelect;
+	public VectorDelegate onDrag;
+	public VoidDelegate onDragOut;
 
-	static public ButtonEventListener Get (GameObject go) {
-		ButtonEventListener listener = go.GetComponent<ButtonEventListener>();
-		if (listener == null) listener = go.AddComponent<ButtonEventListener>();
+	static public GBEventListener Get (GameObject go) {
+		GBEventListener listener = go.GetComponent<GBEventListener>();
+		if (listener == null) {
+			listener = go.AddComponent<GBEventListener>();
+		}
 		return listener;
 	}
 
@@ -38,5 +43,11 @@ public class ButtonEventListener : UnityEngine.EventSystems.EventTrigger{
 	}
 	public override void OnUpdateSelected (BaseEventData eventData){
 		if(onUpdateSelect != null) onUpdateSelect(gameObject);
+	}
+	public override void OnDrag(PointerEventData eventData) {  
+		if(onDrag != null) onDrag(gameObject, eventData.delta);
+	}
+	public override void OnEndDrag(PointerEventData eventData) {
+		if(onDragOut != null) onDragOut(gameObject);
 	}
 }

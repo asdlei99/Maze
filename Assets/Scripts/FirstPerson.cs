@@ -58,11 +58,7 @@ public class FirstPerson : MonoBehaviour {
 
 	private AudioSource m_AudioSource;
 
-	[HideInInspector]public DirectionType viewTurnDirection = DirectionType.None;
 	[HideInInspector]public DirectionType personMoveDirection = DirectionType.None;
-
-	[HideInInspector]public bool isUseViewRocker = false;
-	[HideInInspector]public static bool isCouldViewTurn = true;
 
 	private float m_StepCycle;
 	private float m_NextStep;
@@ -85,70 +81,24 @@ public class FirstPerson : MonoBehaviour {
 	}
 
 	void Update () {
-		//视角转动
-		if(isCouldViewTurn){
-			RotateView ();
-		}
+
 	}  
 
 	private void FixedUpdate() {
 		DoMove ();
 	}
 
-	void RotateView() {
-		if (isUseViewRocker) {
-			switch (viewTurnDirection) {
-			case DirectionType.Left:
-				m_chaQutation *= Quaternion.Euler (0f, -CameraSet.XSensitive * 0.5f, 0f);
-				m_chaTrans.rotation = m_chaQutation;
-				break;
-			case DirectionType.Right:
-				m_chaQutation *= Quaternion.Euler (0f, CameraSet.XSensitive * 0.5f, 0f);
-				m_chaTrans.rotation = m_chaQutation;
-				break;
-			case DirectionType.Up:
-				m_camQutation *= Quaternion.Euler (-1, 0f, 0f);
-				m_camTrans.localRotation = m_camQutation;
-				break;
-			case DirectionType.Down:
-				m_camQutation *= Quaternion.Euler (1, 0f, 0f);
-				m_camTrans.localRotation = m_camQutation;
-				break;
-			}
+	public void RotateView(float x, float y){
+		float yRot = x * CameraSet.XSensitive;
+		float xRot = y * CameraSet.YSensitive;
+		//四元数使用
+		{
+			m_chaQutation *= Quaternion.Euler(0f, yRot, 0f);
+			m_chaTrans.localRotation = m_chaQutation;
 
-
-		} else {
-			#if !UNITY_EDITOR
-			int touchIndex = 0;
-			bool isNeedTurn = false;
-			if (personMoveDirection != DirectionType.None && Input.touchCount > 1) {
-				touchIndex = 1;
-				isNeedTurn = true;
-			} else if(Input.touchCount == 1){
-				isNeedTurn = true;
-			}
-			//手指在屏幕上移动，移动摄像机
-			if (isNeedTurn && Input.touches [touchIndex].phase == TouchPhase.Moved) {
-				m_chaQutation *= Quaternion.Euler (0f, Input.touches [touchIndex].deltaPosition.x * Time.deltaTime * CameraSet.XSensitive, 0f);
-				m_chaTrans.rotation = m_chaQutation;
-
-				m_camQutation *= Quaternion.Euler (-Input.touches [touchIndex].deltaPosition.y * Time.deltaTime * CameraSet.YSensitive, 0f, 0f);
-				m_camQutation = ClampRotation (m_camQutation);
-				m_camTrans.localRotation = m_camQutation;
-			}
-			#else
-			float yRot = Input.GetAxis("Mouse X") * CameraSet.XSensitive;
-			float xRot = Input.GetAxis("Mouse Y") * CameraSet.YSensitive;
-			//四元数使用
-			{
-				m_chaQutation *= Quaternion.Euler(0f, yRot, 0f);
-				m_chaTrans.localRotation = m_chaQutation;
-
-				m_camQutation *= Quaternion.Euler (-xRot, 0f, 0f);
-				m_camQutation = ClampRotation (m_camQutation);
-				m_camTrans.localRotation = m_camQutation;
-			}
-			#endif
+			m_camQutation *= Quaternion.Euler (-xRot, 0f, 0f);
+			m_camQutation = ClampRotation (m_camQutation);
+			m_camTrans.localRotation = m_camQutation;
 		}
 	}
 
