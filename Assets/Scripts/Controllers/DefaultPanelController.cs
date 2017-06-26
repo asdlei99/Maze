@@ -144,7 +144,7 @@ public class DefaultPanelController : PanelController {
 	}
 
 	void CreatePaint(PaintType type){
-		mapController.Paint (firstPerson.m_chaTrans);
+		mapController.Paint (firstPerson.m_chaTrans, type);
 	}
 
 	void SettingValueChanged(SettingType type, bool value){

@@ -13,9 +13,8 @@ public class MapController : MonoBehaviour {
 	
 	}
 
-	public void Paint(Transform transform){
+	public void Paint(Transform transform, PaintType type){
 		GameObject obj = Instantiate (paintProjector) as GameObject;
-		obj.transform.position = transform.position + Vector3.up * 2f;
-		obj.transform.rotation = transform.rotation;
+		obj.GetComponent<PaintProjectorController> ().Init (transform, type);
 	}
 }

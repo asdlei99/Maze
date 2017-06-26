@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Compenents\CloseBtn.cs" />
      <Compile Include="Assets\Scripts\Compenents\Switch.cs" />
+     <Compile Include="Assets\Scripts\Controllers\DefaultPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\EndPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\LoadingController.cs" />
      <Compile Include="Assets\Scripts\Controllers\MainController.cs" />
@@ -57,7 +58,6 @@
      <Compile Include="Assets\Scripts\Controllers\RockerController.cs" />
      <Compile Include="Assets\Scripts\Controllers\SettingPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\WallController.cs" />
-     <Compile Include="Assets\Scripts\DefaultPanelController.cs" />
      <Compile Include="Assets\Scripts\FinishTriggerController.cs" />
      <Compile Include="Assets\Scripts\FirstPerson.cs" />
      <Compile Include="Assets\Scripts\GBEventListener.cs" />
@@ -94,7 +94,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Apply.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\frag_ao.cginc" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
-     <None Include="Assets\WallShade.shader" />
+     <None Include="Assets\Shaders\WallShade.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfField34.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBlur.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SSAOShader.shader" />
@@ -141,7 +141,7 @@
      <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\Blend.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
-     <None Include="Assets\ProjectorImage.shader" />
+     <None Include="Assets\Shaders\ProjectorImage.shader" />
      <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SimpleClear.shader" />
      <None Include="Assets\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularDisplacement.shader" />
