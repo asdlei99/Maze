@@ -11,9 +11,6 @@ public class DefaultPanelController : PanelController {
 	[SerializeField]private EndPanelController endController;
 
 	[SerializeField]private RockerController viewRocker;
-	[SerializeField]private FinishTriggerController finishTriggerController;
-
-	[HideInInspector]public bool isUseViewRocker = false;
 
 	private const string PersonRockerPathName = "Canvas/DefaultPanel/PersonRocker/";
 	private const string GoForwardBtnName = "GoForwardBtn";
@@ -27,7 +24,11 @@ public class DefaultPanelController : PanelController {
 	private const string SettingBtnName = "SettingBtn";
 
 	private bool isViewRocker = false;
-	[HideInInspector]public static bool isCouldViewTurn = true;
+	[HideInInspector]public static bool isCouldViewTurn;
+
+	public delegate void GameEndDelegate();  
+
+	public static GameEndDelegate gameEnd; 
 
 	void Awake(){
 		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoForwardBtnName)).onDown = BtnOnDownListener;
@@ -48,14 +49,19 @@ public class DefaultPanelController : PanelController {
 
 		paintController.seletedPaint = CreatePaint;
 		settingController.settingValueChanged = SettingValueChanged;
-		finishTriggerController.playerEntered = GameEnd;
 
 		viewRocker.rockerStart = ViewRockerStart;
 		viewRocker.rockerEnd = ViewRockerEnd;
+
+		gameEnd = GameEnd;
+
+		isCouldViewTurn = true;
 	}
 
 	void Start () {
-	
+		firstPerson.transform.position = CurrentLevelMessage.Instance.bornPosition;
+		GameObject.Find ("Canvas/DefaultPanel/Banner/LevelText").GetComponent<Text> ().text = CurrentLevelMessage.Instance.name;
+		name = "Level" + CurrentLevelMessage.Instance.levelIndex;
 	}
 	
 	void Update () {
@@ -89,15 +95,10 @@ public class DefaultPanelController : PanelController {
 		if (isCouldViewTurn) {
 			CheckViewRotate ();
 		}
-
-//		Vector3 vecMove = viewRocker.MovePosiNorm*Time.deltaTime*moveSpeed/10;  
-//		_mTransform.localPosition+=vecMove;  
-//		float angle = Mathf.Atan2 (viewRocker.MovePosiNorm.x, viewRocker.MovePosiNorm.z) * Mathf.Rad2Deg - 10;  
-//		_mTransform.localRotation = Quaternion.Euler(Vector3.up*angle);
 	}
 
 	void CheckViewRotate(){
-		if (isUseViewRocker) {
+		if (viewRocker.gameObject.activeSelf) {
 			if (isViewRocker) {
 				firstPerson.RotateView (viewRocker.MovePosiNorm.x / 2.5f, viewRocker.MovePosiNorm.z / 2.5f);
 			}
@@ -152,10 +153,8 @@ public class DefaultPanelController : PanelController {
 		case SettingType.ViewRocker:
 			if (value) {
 				viewRocker.gameObject.SetActive (true);
-				isUseViewRocker = true;
 			} else {
 				viewRocker.gameObject.SetActive (false);
-				isUseViewRocker = false;
 			}
 			SettingInfo.Instance.isOpenViewRocker = value;
 			break;
@@ -165,7 +164,7 @@ public class DefaultPanelController : PanelController {
 		}
 	}
 
-	void GameEnd(){
+	public void GameEnd(){
 		endController.SetActive (true);
 	}
 

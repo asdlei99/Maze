@@ -58,9 +58,11 @@
      <Compile Include="Assets\Scripts\Controllers\RockerController.cs" />
      <Compile Include="Assets\Scripts\Controllers\SettingPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\WallController.cs" />
+     <Compile Include="Assets\Scripts\CurrentLevelMessage.cs" />
      <Compile Include="Assets\Scripts\FinishTriggerController.cs" />
      <Compile Include="Assets\Scripts\FirstPerson.cs" />
      <Compile Include="Assets\Scripts\GBEventListener.cs" />
+     <Compile Include="Assets\Scripts\LevelsMessage.cs" />
      <Compile Include="Assets\Scripts\MazeTool.cs" />
      <Compile Include="Assets\Scripts\MazeType.cs" />
      <Compile Include="Assets\Scripts\Models\Player.cs" />

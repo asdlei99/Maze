@@ -27,7 +27,7 @@ public class SettingInfo {
 
 	public void Init(){
 		FileTool fileTool = new FileTool();
-		Debug.Log (Application.persistentDataPath);
+//		Debug.Log (Application.persistentDataPath);
 		ArrayList list = fileTool.LoadFile (Application.persistentDataPath, fileName);
 		if (list != null) {
 			string openViewRocker = list [0].ToString ().Split ('_') [1].ToString ();

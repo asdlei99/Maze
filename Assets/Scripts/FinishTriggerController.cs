@@ -3,14 +3,11 @@ using System.Collections;
 
 public class FinishTriggerController : MonoBehaviour {
 
-	public delegate void PlayerEntered(); 
-	public PlayerEntered playerEntered;
-
 	void OnTriggerEnter(Collider collider){
 		//进入触发器执行的代码
 		if (collider.gameObject.name == "FirstPerson") {
-			if(playerEntered != null){
-				playerEntered ();
+			if(DefaultPanelController.gameEnd != null){
+				DefaultPanelController.gameEnd ();
 			}
 		}
 	}

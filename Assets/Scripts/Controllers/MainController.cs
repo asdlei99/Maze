@@ -11,6 +11,8 @@ public class MainController : MonoBehaviour {
 		});
 
 		SettingInfo.Instance.Init();
+
+		CurrentLevelMessage.Instance.levelIndex = 1;
 	}
 	
 	void Update () {
