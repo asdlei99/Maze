@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using SimpleJson;
 
 public class SettingInfo {
 
@@ -20,32 +21,38 @@ public class SettingInfo {
 	}
 
 	public void Save(){
+		JsonObject settingJson = new JsonObject();
+		settingJson ["isOpenViewRocker"] = isOpenViewRocker;
+		settingJson ["isOpenAudio"] = isOpenAudio;
+
 		FileTool fileTool = new FileTool();
-		fileTool.WriteFile (Application.persistentDataPath, fileName, "isOpenViewRocker_" + isOpenViewRocker);
-		fileTool.WriteFileToAppend (Application.persistentDataPath, fileName, "isOpenAudio_" + isOpenAudio);
+		fileTool.WriteFile (Application.persistentDataPath, fileName, settingJson.ToString());
 	}
 
 	public void Init(){
-		FileTool fileTool = new FileTool();
+		isOpenViewRocker = false;
+		isOpenAudio = true;
+		#if UNITY_EDITOR
+		isOpenViewRocker = true;
+		#endif
+
+		FileTool fileTool = new FileTool ();
 //		Debug.Log (Application.persistentDataPath);
 		ArrayList list = fileTool.LoadFile (Application.persistentDataPath, fileName);
 		if (list != null) {
-			string openViewRocker = list [0].ToString ().Split ('_') [1].ToString ();
-			if ("True".Equals (openViewRocker)) {
-				isOpenViewRocker = true;
-			} else {
-				isOpenViewRocker = false;
-			}
+			object settingObj = new object ();
+			if (SimpleJson.SimpleJson.TryDeserializeObject (list [0].ToString(), out settingObj)) {
+				JsonObject settingJson = (JsonObject)settingObj;
+				object openViewRocker;
+				if (settingJson.TryGetValue ("isOpenViewRocker", out openViewRocker)) {
+					bool.TryParse (openViewRocker.ToString (), out isOpenViewRocker);
+				}
 
-			string openAudio = list [1].ToString ().Split ('_') [1].ToString ();
-			if ("False".Equals (openAudio)) {
-				isOpenAudio = false;
-			} else {
-				isOpenAudio = true;
+				object openAudio;
+				if (settingJson.TryGetValue ("isOpenAudio", out openAudio)) {
+					bool.TryParse (openAudio.ToString (), out isOpenAudio);
+				}
 			}
-		} else {
-			isOpenViewRocker = false;
-			isOpenAudio = true;
-		}
+		} 
 	}
 }

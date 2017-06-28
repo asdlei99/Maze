@@ -10,6 +10,10 @@ public class PanelController : MonoBehaviour {
 			DefaultPanelController.isCouldViewTurn = false;
 		} else {
 			DefaultPanelController.isCouldViewTurn = true;
+
+			if ("SettingPanel".Equals (name)) {
+				SettingInfo.Instance.Save ();
+			}
 		}
 	}
 }

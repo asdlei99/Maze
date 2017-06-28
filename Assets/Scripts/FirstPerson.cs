@@ -25,7 +25,7 @@ public class FirstPerson : MonoBehaviour {
 
 	[SerializeField] private AudioClip m_footstepSound;
 	[SerializeField] private float m_StepInterval;
-	[SerializeField]private Camera m_camera;  
+	[SerializeField] private Camera m_camera;  
 
 	public MoveSetting moveSet;  
 	public MouseLook CameraSet;  
@@ -39,7 +39,7 @@ public class FirstPerson : MonoBehaviour {
 	private Rigidbody m_rigidbody;  
 
 	//相机的Transform（减少Update中transform的调用）  
-	private Transform m_camTrans;  
+	[HideInInspector]public Transform m_camTrans;  
 	//主角的Transform  
 	[HideInInspector]public Transform m_chaTrans;
 
@@ -58,35 +58,35 @@ public class FirstPerson : MonoBehaviour {
 
 	private AudioSource m_AudioSource;
 
-	[HideInInspector]public DirectionType personMoveDirection = DirectionType.None;
-
 	private float m_StepCycle;
 	private float m_NextStep;
 
-	void Start () {  
+	void Awake(){
 		m_capsule = GetComponent<CapsuleCollider>();
 		m_rigidbody = GetComponent<Rigidbody>();
 
 		m_camTrans = m_camera.transform;
 		m_chaTrans = transform;
+	}
 
-		//初始化参数  
+	void Start () {
+		m_chaTrans.position = CurrentLevelMessage.Instance.bornPosition;
+		m_chaTrans.rotation = CurrentLevelMessage.Instance.bodyRotation;
+		m_camTrans.localRotation = CurrentLevelMessage.Instance.headRotation;
+
+		//初始化参数
 		m_chaQutation = m_chaTrans.rotation;
 		m_camQutation = m_camTrans.localRotation;
 
 		m_AudioSource = GetComponent<AudioSource>();
 
 		m_StepCycle = 0f;
-		m_NextStep = m_StepCycle/2f;
+		m_NextStep = m_StepCycle / 2f;
 	}
 
 	void Update () {
 
 	}  
-
-	private void FixedUpdate() {
-		DoMove ();
-	}
 
 	public void RotateView(float x, float y){
 		float yRot = x * CameraSet.XSensitive;
@@ -102,22 +102,22 @@ public class FirstPerson : MonoBehaviour {
 		}
 	}
 
-	public void DoMove(){
-		if (personMoveDirection != DirectionType.None) {
+	public void DoMove(DirectionType type){
+		if (type != DirectionType.None) {
 			//检测地面  
 			CheckGround();  
 			//更新当前速度，根据移动方向  
-			CaculateSpeed();
+			CaculateSpeed(type);
 			//判断是否有移动的速度，没有就不给刚体施加力  
 			if (m_isOnGround) {
 				//计算方向力
 				Vector3 desireMove;
 
-				if (personMoveDirection == DirectionType.Back) {
+				if (type == DirectionType.Back) {
 					desireMove = m_chaTrans.forward * -1 + m_chaTrans.right * 0;
-				} else if (personMoveDirection == DirectionType.Left) {
+				} else if (type == DirectionType.Left) {
 					desireMove = m_chaTrans.forward * 0 + m_chaTrans.right * -1;
-				} else if (personMoveDirection == DirectionType.Right) {
+				} else if (type == DirectionType.Right) {
 					desireMove = m_chaTrans.forward * 0 + m_chaTrans.right * 1;
 				} else {
 					desireMove = m_chaTrans.forward * 1 + m_chaTrans.right * 0;
@@ -137,19 +137,23 @@ public class FirstPerson : MonoBehaviour {
 				}
 			}
 		} else {
-			m_rigidbody.Sleep ();
+			MoveStop ();
 		}
 	}
 
-	void CaculateSpeed() {  
+	public void MoveStop(){
+		m_rigidbody.Sleep ();
+	}
+
+	void CaculateSpeed(DirectionType type) {  
 		currentSpeed = moveSet.ForwardSpeed;  
 
 		//后退
-		if (personMoveDirection == DirectionType.Back) {  
+		if (type == DirectionType.Back) {  
 			currentSpeed = moveSet.BackSpeed;  
 		}
 		//左右
-		if(personMoveDirection == DirectionType.Left || personMoveDirection == DirectionType.Right){
+		if(type == DirectionType.Left || type == DirectionType.Right){
 			currentSpeed = moveSet.HorizonSpeed;
 		}
 	}

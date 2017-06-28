@@ -8,6 +8,9 @@ public class MapController : MonoBehaviour {
 	[SerializeField]private GameObject level2;
 
 	void Awake () {
+		if(CurrentLevelMessage.Instance.levelIndex == 0){
+			CurrentLevelMessage.Instance.Init();
+		}
 		GameObject MapObj;
 		switch (CurrentLevelMessage.Instance.levelIndex) {
 //		case 1:
@@ -16,25 +19,42 @@ public class MapController : MonoBehaviour {
 		case 2:
 			MapObj = Instantiate (level2) as GameObject;
 			CurrentLevelMessage.Instance.name = LevelsMessage.Level2Name;
-			CurrentLevelMessage.Instance.bornPosition = LevelsMessage.Level2BornPosition;
+			if (CurrentLevelMessage.Instance.bornPosition.x == MazeTool.errorFloat) {
+				CurrentLevelMessage.Instance.bornPosition = LevelsMessage.Level2BornPosition;
+			}
+			if (CurrentLevelMessage.Instance.bodyRotation.x == MazeTool.errorFloat) {
+				CurrentLevelMessage.Instance.bodyRotation = LevelsMessage.Level2BodyRotation;
+			}
 			break;
 		default:
 			MapObj = Instantiate (level1) as GameObject;
 			CurrentLevelMessage.Instance.name = LevelsMessage.Level1Name;
-			CurrentLevelMessage.Instance.bornPosition = LevelsMessage.Level1BornPosition;
+			if (CurrentLevelMessage.Instance.bornPosition.x == MazeTool.errorFloat) {
+				CurrentLevelMessage.Instance.bornPosition = LevelsMessage.Level1BornPosition;
+			}
+			if (CurrentLevelMessage.Instance.bodyRotation.x == MazeTool.errorFloat) {
+				CurrentLevelMessage.Instance.bodyRotation = LevelsMessage.Level1BodyRotation;
+			}
 			CurrentLevelMessage.Instance.levelIndex = 1;
 			break;
 		}
 		MapObj.transform.SetParent (this.transform, false);
+	}
+
+	void Start(){
+		for (int i = 0; i < CurrentLevelMessage.Instance.projectorMessageList.Count; i++) {
+			CurrentLevelMessage.ProjectorMessage pm = CurrentLevelMessage.Instance.projectorMessageList [i];
+			Paint (pm.position, pm.rotation, pm.type);
+		}
 	}
 	
 	void Update () {
 	
 	}
 
-	public void Paint(Transform transform, PaintType type){
+	public void Paint(Vector3 position, Quaternion rotation, PaintType type){
 		GameObject obj = Instantiate (paintProjector) as GameObject;
 		obj.transform.SetParent (this.transform, false);
-		obj.GetComponent<PaintProjectorController> ().Init (transform, type);
+		obj.GetComponent<PaintProjectorController> ().Init (position, rotation, type);
 	}
 }

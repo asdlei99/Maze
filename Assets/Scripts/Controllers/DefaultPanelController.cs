@@ -22,13 +22,16 @@ public class DefaultPanelController : PanelController {
 
 	private const string BannerName = "Canvas/DefaultPanel/Banner/";
 	private const string SettingBtnName = "SettingBtn";
+	private const string ExitBtnName = "ExitBtn";
 
 	private bool isViewRocker = false;
 	[HideInInspector]public static bool isCouldViewTurn;
 
-	public delegate void GameEndDelegate();  
+	[HideInInspector]public delegate void GameEndDelegate();
+	[HideInInspector]public static GameEndDelegate gameEnd;
 
-	public static GameEndDelegate gameEnd; 
+	private DirectionType personMoveDirection;// 人物行走的方向
+	private bool IsCanMove;
 
 	void Awake(){
 		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoForwardBtnName)).onDown = BtnOnDownListener;
@@ -40,12 +43,13 @@ public class DefaultPanelController : PanelController {
 		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoRightBtnName)).onDown = BtnOnDownListener;
 		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoRightBtnName)).onUp = BtnOnUpListener;
 
-		if (!SettingInfo.Instance.isOpenViewRocker) {
-			viewRocker.gameObject.SetActive (false);
-		}
+		#if UNITY_EDITOR
+		SettingInfo.Instance.Init ();
+		#endif
 
 		GBEventListener.Get(GameObject.Find ("Canvas/DefaultPanel/" + PaintBtnName)).onClick = BtnOnClickListener;
 		GBEventListener.Get(GameObject.Find (BannerName + SettingBtnName)).onClick = BtnOnClickListener;
+		GBEventListener.Get(GameObject.Find (BannerName + ExitBtnName)).onClick = BtnOnClickListener;
 
 		paintController.seletedPaint = CreatePaint;
 		settingController.settingValueChanged = SettingValueChanged;
@@ -56,44 +60,55 @@ public class DefaultPanelController : PanelController {
 		gameEnd = GameEnd;
 
 		isCouldViewTurn = true;
+		IsCanMove = true;
+		personMoveDirection = DirectionType.None;
 	}
 
 	void Start () {
-		firstPerson.transform.position = CurrentLevelMessage.Instance.bornPosition;
 		GameObject.Find ("Canvas/DefaultPanel/Banner/LevelText").GetComponent<Text> ().text = CurrentLevelMessage.Instance.name;
 		name = "Level" + CurrentLevelMessage.Instance.levelIndex;
+
+		if (!SettingInfo.Instance.isOpenViewRocker) {
+			viewRocker.gameObject.SetActive (false);
+		}
 	}
 	
 	void Update () {
 		if(Input.GetKeyDown (KeyCode.W)){
-			firstPerson.personMoveDirection = DirectionType.Forward;
+			personMoveDirection = DirectionType.Forward;
 		}
 		if(Input.GetKeyUp (KeyCode.W)){
-			firstPerson.personMoveDirection = DirectionType.None;
+			personMoveDirection = DirectionType.None;
 		}
 		if(Input.GetKeyDown (KeyCode.A)){
-			firstPerson.personMoveDirection = DirectionType.Left;
+			personMoveDirection = DirectionType.Left;
 		}
 		if(Input.GetKeyUp (KeyCode.A)){
-			firstPerson.personMoveDirection = DirectionType.None;
+			personMoveDirection = DirectionType.None;
 		}
 		if(Input.GetKeyDown (KeyCode.S)){
-			firstPerson.personMoveDirection = DirectionType.Back;  
-			return;
+			personMoveDirection = DirectionType.Back;  
 		}
 		if(Input.GetKeyUp (KeyCode.S)){
-			firstPerson.personMoveDirection = DirectionType.None;  
-			return;
+			personMoveDirection = DirectionType.None;  
 		}
 		if(Input.GetKeyDown (KeyCode.D)){
-			firstPerson.personMoveDirection = DirectionType.Right;
+			personMoveDirection = DirectionType.Right;
 		}
 		if(Input.GetKeyUp (KeyCode.D)){
-			firstPerson.personMoveDirection = DirectionType.None;
+			personMoveDirection = DirectionType.None;
 		}
 
 		if (isCouldViewTurn) {
 			CheckViewRotate ();
+		}
+	}
+
+	private void FixedUpdate() {
+		if (IsCanMove && personMoveDirection != DirectionType.None) {
+			firstPerson.DoMove (personMoveDirection);
+		} else {
+			firstPerson.MoveStop ();
 		}
 	}
 
@@ -105,7 +120,7 @@ public class DefaultPanelController : PanelController {
 		} else {
 			int touchIndex = 0;
 			bool isNeedTurn = false;
-			if (firstPerson.personMoveDirection != DirectionType.None && Input.touchCount > 1) {
+			if (personMoveDirection != DirectionType.None && Input.touchCount > 1) {
 				touchIndex = 1;
 				isNeedTurn = true;
 			} else if (Input.touchCount == 1) {
@@ -120,19 +135,19 @@ public class DefaultPanelController : PanelController {
 
 	void BtnOnDownListener(GameObject obj){
 		if (obj.name == GoForwardBtnName) {
-			firstPerson.personMoveDirection = DirectionType.Forward;
+			personMoveDirection = DirectionType.Forward;
 		}else if(obj.name == GoBackBtnName){
-			firstPerson.personMoveDirection = DirectionType.Back;
+			personMoveDirection = DirectionType.Back;
 		}else if(obj.name == GoLeftBtnName){
-			firstPerson.personMoveDirection = DirectionType.Left;
+			personMoveDirection = DirectionType.Left;
 		}else if(obj.name == GoRightBtnName){
-			firstPerson.personMoveDirection = DirectionType.Right;
+			personMoveDirection = DirectionType.Right;
 		}
 	}
 
 	void BtnOnUpListener(GameObject obj){
 		if (obj.name == GoForwardBtnName || obj.name == GoBackBtnName || obj.name == GoLeftBtnName || obj.name == GoRightBtnName) {
-			firstPerson.personMoveDirection = DirectionType.None;
+			personMoveDirection = DirectionType.None;
 		}
 	}
 
@@ -141,11 +156,13 @@ public class DefaultPanelController : PanelController {
 			paintController.SetActive (true);
 		}else if(obj.name == SettingBtnName){
 			settingController.SetActive (true);
+		}else if(obj.name == ExitBtnName){
+			
 		}
 	}
 
 	void CreatePaint(PaintType type){
-		mapController.Paint (firstPerson.m_chaTrans, type);
+		mapController.Paint (firstPerson.m_chaTrans.position, firstPerson.m_chaTrans.rotation, type);
 	}
 
 	void SettingValueChanged(SettingType type, bool value){
@@ -165,6 +182,7 @@ public class DefaultPanelController : PanelController {
 	}
 
 	public void GameEnd(){
+		IsCanMove = false;
 		endController.SetActive (true);
 	}
 
@@ -176,10 +194,20 @@ public class DefaultPanelController : PanelController {
 		isViewRocker = false;
 	}
 
+	void SaveMapMessage(){
+		CurrentLevelMessage.Instance.bodyRotation = firstPerson.m_chaTrans.rotation;
+		CurrentLevelMessage.Instance.headRotation = firstPerson.m_camTrans.localRotation;
+		CurrentLevelMessage.Instance.bornPosition = firstPerson.m_chaTrans.position;
+		CurrentLevelMessage.Instance.Save ();
+	}
+
 	void OnApplicationPause(){
-		SettingInfo.Instance.Save ();
+		#if !UNITY_EDITOR
+		SaveMapMessage ();
+		#endif
 	}
 
 	void OnApplicationQuit() {
+		SaveMapMessage ();
 	}
 }

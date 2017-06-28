@@ -11,8 +11,6 @@ public class MainController : MonoBehaviour {
 		});
 
 		SettingInfo.Instance.Init();
-
-		CurrentLevelMessage.Instance.levelIndex = 1;
 	}
 	
 	void Update () {
@@ -20,7 +18,6 @@ public class MainController : MonoBehaviour {
 	}
 
 	void OnApplicationPause(){
-		SettingInfo.Instance.Save ();
 	}
 
 	void OnApplicationQuit() {
