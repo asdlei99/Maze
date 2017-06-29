@@ -56,12 +56,8 @@ public class CurrentLevelMessage {
 	}
 
 	public void Init(){
-		projectorMessageList.Clear ();
 		levelIndex = 1;
-		bornPosition = new Vector3(MazeTool.errorFloat, 0, 0);
-		bodyRotation = new Quaternion(MazeTool.errorFloat, 0, 0, 0);
-		headRotation = new Quaternion(0, 0, 0, 1);
-
+		Reset ();
 		FileTool fileTool = new FileTool ();
 		ArrayList list = fileTool.LoadFile (Application.persistentDataPath, fileName);
 		if (list != null) {
@@ -113,7 +109,14 @@ public class CurrentLevelMessage {
 				} 
 			}
 		}
-		Log ();
+//		Log ();
+	}
+
+	public void Reset(){
+		projectorMessageList.Clear ();
+		bornPosition = new Vector3(MazeTool.errorFloat, 0, 0);
+		bodyRotation = new Quaternion(MazeTool.errorFloat, 0, 0, 0);
+		headRotation = new Quaternion(0, 0, 0, 1);
 	}
 
 	public void Log(){

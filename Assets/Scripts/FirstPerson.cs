@@ -13,7 +13,7 @@ public class FirstPerson : MonoBehaviour {
 		public float BackSpeed = 2f;
 		public float HorizonSpeed = 2f;
 
-		public float RunValue = 2f;
+		public float RunValue = 5f;
 	}
 
 	//把视角相关的独立出来  

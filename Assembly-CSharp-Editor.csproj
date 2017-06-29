@@ -170,6 +170,9 @@
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
+ <Reference Include="SimpleJson">
+ <HintPath>/Users/wjr_mac/Documents/unity/Maze/Assets/Scripts/Tools/SimpleJson.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
@@ -181,9 +184,6 @@
  </Reference>
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="SimpleJson">
- <HintPath>/Users/wjr_mac/Documents/unity/Maze/Assets/Scripts/Tools/SimpleJson.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

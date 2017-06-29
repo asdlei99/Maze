@@ -5,7 +5,6 @@ using System.Collections;
 public class PaintProjectorController : MonoBehaviour {
 
 	private float nearDistance, maxDistance = 9f;
-	private PaintType type;
 	[SerializeField]private Material kang;
 	[SerializeField]private Material sbf;
 
@@ -24,18 +23,11 @@ public class PaintProjectorController : MonoBehaviour {
 				GetComponent<Projector> ().farClipPlane = maxDistance;
 			}
 		}
-
-		CurrentLevelMessage.ProjectorMessage pm = new CurrentLevelMessage.ProjectorMessage ();
-		pm.position = transform.position;
-		pm.rotation = transform.rotation;
-		pm.type = type;
-		CurrentLevelMessage.Instance.projectorMessageList.Add (pm);
 	}
 
 	public void Init(Vector3 position, Quaternion rotation, PaintType type){
 		this.transform.position = position + Vector3.up * 2f;
 		this.transform.rotation = rotation;
-		this.type = type;
 		switch (type) {
 		case PaintType.Paint0:
 			GetComponent<Projector> ().material = sbf;

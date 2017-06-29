@@ -47,16 +47,18 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Compenents\CloseBtn.cs" />
      <Compile Include="Assets\Scripts\Compenents\Switch.cs" />
-     <Compile Include="Assets\Scripts\Controllers\DefaultPanelController.cs" />
-     <Compile Include="Assets\Scripts\Controllers\EndPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\LoadingController.cs" />
      <Compile Include="Assets\Scripts\Controllers\MainController.cs" />
      <Compile Include="Assets\Scripts\Controllers\MapController.cs" />
-     <Compile Include="Assets\Scripts\Controllers\PaintPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\PaintProjectorController.cs" />
-     <Compile Include="Assets\Scripts\Controllers\PanelController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Panels\DefaultPanelController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Panels\Dialogs\DialogController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Panels\Dialogs\DialogTwoBtnController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Panels\EndPanelController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Panels\PaintPanelController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Panels\PanelController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Panels\SettingPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\RockerController.cs" />
-     <Compile Include="Assets\Scripts\Controllers\SettingPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\WallController.cs" />
      <Compile Include="Assets\Scripts\FinishTriggerController.cs" />
      <Compile Include="Assets\Scripts\FirstPerson.cs" />

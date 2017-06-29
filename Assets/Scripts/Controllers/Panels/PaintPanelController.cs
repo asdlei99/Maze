@@ -16,6 +16,7 @@ public class PaintPanelController : PanelController, IPointerClickHandler {
 		GBEventListener.Get(paint0.gameObject).onClick = BtnOnClickListener;
 		GBEventListener.Get(paint1.gameObject).onClick = BtnOnClickListener;
 		GBEventListener.Get(paint2.gameObject).onClick = BtnOnClickListener;
+		GBEventListener.Get (this.transform.FindChild ("SelectPanel").gameObject).onClick = null;
 	}
 	
 	void Update () {
@@ -36,7 +37,6 @@ public class PaintPanelController : PanelController, IPointerClickHandler {
 	}
 
 	public void OnPointerClick(PointerEventData eventData) {
-		//双击，将选中的牌缩回
 		if(eventData.clickCount == 1) {
 			SetActive (false);
 		}

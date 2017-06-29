@@ -1,13 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MazeTool.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Controllers/DialogController.cs">
     <Files>
-      <File FileName="Assets/Scripts/Controllers/DefaultPanelController.cs" Line="162" Column="21" />
-      <File FileName="Assets/Scripts/Models/SettingInfo.cs" Line="28" Column="2" />
-      <File FileName="Assets/Scripts/CurrentLevelMessage.cs" Line="17" Column="28" />
-      <File FileName="Assets/Scripts/Controllers/MapController.cs" Line="35" Column="13" />
-      <File FileName="Assets/Scripts/Controllers/PaintProjectorController.cs" Line="43" Column="39" />
-      <File FileName="Assets/Scripts/MazeTool.cs" Line="29" Column="23" />
+      <File FileName="Assets/Scripts/Controllers/PaintProjectorController.cs" Line="32" Column="1" />
+      <File FileName="Assets/Scripts/Controllers/MapController.cs" Line="46" Column="33" />
+      <File FileName="Assets/Scripts/FirstPerson.cs" Line="83" Column="20" />
+      <File FileName="Assets/Scripts/Controllers/DialogController.cs" Line="11" Column="16" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

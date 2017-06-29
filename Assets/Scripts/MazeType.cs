@@ -23,3 +23,13 @@ public enum SettingType{
 	Audio,
 	None
 }
+
+public enum DialogViewType{
+	OneBtn,
+	TwoBtn
+}
+
+public enum DialogHitType{
+	Exit,
+
+}

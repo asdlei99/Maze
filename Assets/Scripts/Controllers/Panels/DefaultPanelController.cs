@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DefaultPanelController : PanelController {
 
@@ -9,8 +10,11 @@ public class DefaultPanelController : PanelController {
 	[SerializeField]private PaintPanelController paintController;
 	[SerializeField]private SettingPanelController settingController;
 	[SerializeField]private EndPanelController endController;
-
 	[SerializeField]private RockerController viewRocker;
+
+	[HideInInspector]public static bool isCouldViewTurn;
+	[HideInInspector]public delegate void GameEndDelegate();
+	[HideInInspector]public static GameEndDelegate gameEnd;
 
 	private const string PersonRockerPathName = "Canvas/DefaultPanel/PersonRocker/";
 	private const string GoForwardBtnName = "GoForwardBtn";
@@ -25,10 +29,6 @@ public class DefaultPanelController : PanelController {
 	private const string ExitBtnName = "ExitBtn";
 
 	private bool isViewRocker = false;
-	[HideInInspector]public static bool isCouldViewTurn;
-
-	[HideInInspector]public delegate void GameEndDelegate();
-	[HideInInspector]public static GameEndDelegate gameEnd;
 
 	private DirectionType personMoveDirection;// 人物行走的方向
 	private bool IsCanMove;
@@ -66,7 +66,6 @@ public class DefaultPanelController : PanelController {
 
 	void Start () {
 		GameObject.Find ("Canvas/DefaultPanel/Banner/LevelText").GetComponent<Text> ().text = CurrentLevelMessage.Instance.name;
-		name = "Level" + CurrentLevelMessage.Instance.levelIndex;
 
 		if (!SettingInfo.Instance.isOpenViewRocker) {
 			viewRocker.gameObject.SetActive (false);
@@ -157,12 +156,17 @@ public class DefaultPanelController : PanelController {
 		}else if(obj.name == SettingBtnName){
 			settingController.SetActive (true);
 		}else if(obj.name == ExitBtnName){
-			
+			ShowDialog ("提asd示", "sadsadas", DialogHitType.Exit);
 		}
 	}
 
 	void CreatePaint(PaintType type){
 		mapController.Paint (firstPerson.m_chaTrans.position, firstPerson.m_chaTrans.rotation, type);
+		CurrentLevelMessage.ProjectorMessage pm = new CurrentLevelMessage.ProjectorMessage ();
+		pm.position = firstPerson.m_chaTrans.position;
+		pm.rotation = firstPerson.m_chaTrans.rotation;
+		pm.type = type;
+		CurrentLevelMessage.Instance.projectorMessageList.Add (pm);
 	}
 
 	void SettingValueChanged(SettingType type, bool value){
@@ -199,6 +203,15 @@ public class DefaultPanelController : PanelController {
 		CurrentLevelMessage.Instance.headRotation = firstPerson.m_camTrans.localRotation;
 		CurrentLevelMessage.Instance.bornPosition = firstPerson.m_chaTrans.position;
 		CurrentLevelMessage.Instance.Save ();
+	}
+
+	public override void DialogConfirmBtnClicked(DialogHitType type){
+		switch(type){
+		case DialogHitType.Exit:
+			SaveMapMessage ();
+			SceneManager.LoadScene ("Main");
+			break;
+		}
 	}
 
 	void OnApplicationPause(){

@@ -8,8 +8,12 @@ public class MapController : MonoBehaviour {
 	[SerializeField]private GameObject level2;
 
 	void Awake () {
-		if(CurrentLevelMessage.Instance.levelIndex == 0){
-			CurrentLevelMessage.Instance.Init();
+		if (CurrentLevelMessage.Instance.levelIndex == 0) {
+			//第一次进入
+			CurrentLevelMessage.Instance.Init ();
+		} else {
+			//过关进入
+			CurrentLevelMessage.Instance.Reset ();
 		}
 		GameObject MapObj;
 		switch (CurrentLevelMessage.Instance.levelIndex) {
