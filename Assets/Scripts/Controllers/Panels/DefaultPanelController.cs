@@ -156,7 +156,7 @@ public class DefaultPanelController : PanelController {
 		}else if(obj.name == SettingBtnName){
 			settingController.SetActive (true);
 		}else if(obj.name == ExitBtnName){
-			ShowDialog ("提asd示", "sadsadas", DialogHitType.Exit);
+			ShowDialog ("提示", "确定要退出游戏吗？", DialogHitType.Exit);
 		}
 	}
 
@@ -209,7 +209,7 @@ public class DefaultPanelController : PanelController {
 		switch(type){
 		case DialogHitType.Exit:
 			SaveMapMessage ();
-			SceneManager.LoadScene ("Main");
+			SceneManager.LoadSceneAsync ("Main");
 			break;
 		}
 	}

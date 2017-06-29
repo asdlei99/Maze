@@ -11,9 +11,6 @@ public class MapController : MonoBehaviour {
 		if (CurrentLevelMessage.Instance.levelIndex == 0) {
 			//第一次进入
 			CurrentLevelMessage.Instance.Init ();
-		} else {
-			//过关进入
-			CurrentLevelMessage.Instance.Reset ();
 		}
 		GameObject MapObj;
 		switch (CurrentLevelMessage.Instance.levelIndex) {

@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Controllers\Panels\EndPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Panels\PaintPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Panels\PanelController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Panels\SelectLevelPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Panels\SettingPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\RockerController.cs" />
      <Compile Include="Assets\Scripts\Controllers\WallController.cs" />

@@ -7,7 +7,7 @@ public class MainController : MonoBehaviour {
 
 	void Start () {
 		GameObject.Find ("StartBtn").GetComponent<Button> ().onClick.AddListener (delegate {
-			SceneManager.LoadSceneAsync ("Loading");
+			SceneManager.LoadSceneAsync ("SelectLevel");
 		});
 
 		SettingInfo.Instance.Init();

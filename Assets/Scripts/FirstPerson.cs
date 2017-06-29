@@ -9,11 +9,11 @@ public class FirstPerson : MonoBehaviour {
 	//把运动相关的参数，独立出来  
 	[System.Serializable]
 	public class MoveSetting {
-		public float ForwardSpeed = 3f;
-		public float BackSpeed = 2f;
-		public float HorizonSpeed = 2f;
+		public float ForwardSpeed = 10f;
+		public float BackSpeed = 6f;
+		public float HorizonSpeed = 6f;
 
-		public float RunValue = 5f;
+		public float RunValue = 12f;
 	}
 
 	//把视角相关的独立出来  

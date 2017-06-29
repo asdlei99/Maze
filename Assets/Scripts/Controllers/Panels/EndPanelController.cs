@@ -13,6 +13,7 @@ public class EndPanelController : PanelController {
 		GameObject.Find ("NextBtn").GetComponent<Button> ().onClick.AddListener (delegate {
 			SceneManager.LoadSceneAsync ("Loading");
 			CurrentLevelMessage.Instance.levelIndex ++;
+			CurrentLevelMessage.Instance.Reset ();
 		});
 	}
 	
