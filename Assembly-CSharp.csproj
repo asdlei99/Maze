@@ -47,6 +47,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Compenents\CloseBtn.cs" />
      <Compile Include="Assets\Scripts\Compenents\Switch.cs" />
+     <Compile Include="Assets\Scripts\Compenents\Toast.cs" />
+     <Compile Include="Assets\Scripts\Controllers\LevelTitleController.cs" />
      <Compile Include="Assets\Scripts\Controllers\LoadingController.cs" />
      <Compile Include="Assets\Scripts\Controllers\MainController.cs" />
      <Compile Include="Assets\Scripts\Controllers\MapController.cs" />

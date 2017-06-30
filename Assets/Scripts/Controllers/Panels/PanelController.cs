@@ -25,10 +25,13 @@ public class PanelController : MonoBehaviour {
 		}
 		dialogTwoBtn.InitContent (title, content, hitType);
 		dialogTwoBtn.confirmBtnClicked = DialogConfirmBtnClicked;
+		dialogTwoBtn.cancelBtnClicked = DialogCancelBtnClicked;
 		dialogTwoBtn.SetActive (true);
 	}
 
 	public virtual void DialogConfirmBtnClicked(DialogHitType type){
-		Debug.Log ("DialogConfirmBtnClicked:"+type);
+	}
+
+	public virtual void DialogCancelBtnClicked(DialogHitType type){
 	}
 }

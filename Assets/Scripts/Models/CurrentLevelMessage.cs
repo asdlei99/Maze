@@ -56,7 +56,7 @@ public class CurrentLevelMessage {
 	}
 
 	public void Init(){
-		levelIndex = 1;
+		levelIndex = (int)MazeTool.errorFloat;
 		Reset ();
 		FileTool fileTool = new FileTool ();
 		ArrayList list = fileTool.LoadFile (Application.persistentDataPath, fileName);

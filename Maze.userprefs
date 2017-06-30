@@ -1,11 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Controllers/DialogController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Compenents/Toast.cs">
     <Files>
-      <File FileName="Assets/Scripts/Controllers/PaintProjectorController.cs" Line="32" Column="1" />
-      <File FileName="Assets/Scripts/Controllers/MapController.cs" Line="46" Column="33" />
-      <File FileName="Assets/Scripts/FirstPerson.cs" Line="83" Column="20" />
-      <File FileName="Assets/Scripts/Controllers/DialogController.cs" Line="11" Column="16" />
+      <File FileName="Assets/Scripts/Controllers/Panels/SelectLevelPanelController.cs" Line="34" Column="44" />
+      <File FileName="Assets/Scripts/Compenents/Toast.cs" Line="25" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -8,10 +8,6 @@ public class MapController : MonoBehaviour {
 	[SerializeField]private GameObject level2;
 
 	void Awake () {
-		if (CurrentLevelMessage.Instance.levelIndex == 0) {
-			//第一次进入
-			CurrentLevelMessage.Instance.Init ();
-		}
 		GameObject MapObj;
 		switch (CurrentLevelMessage.Instance.levelIndex) {
 //		case 1:
@@ -19,22 +15,22 @@ public class MapController : MonoBehaviour {
 //			break;
 		case 2:
 			MapObj = Instantiate (level2) as GameObject;
-			CurrentLevelMessage.Instance.name = LevelsMessage.Level2Name;
+			CurrentLevelMessage.Instance.name = LevelsMessage.level2Name;
 			if (CurrentLevelMessage.Instance.bornPosition.x == MazeTool.errorFloat) {
-				CurrentLevelMessage.Instance.bornPosition = LevelsMessage.Level2BornPosition;
+				CurrentLevelMessage.Instance.bornPosition = LevelsMessage.level2BornPosition;
 			}
 			if (CurrentLevelMessage.Instance.bodyRotation.x == MazeTool.errorFloat) {
-				CurrentLevelMessage.Instance.bodyRotation = LevelsMessage.Level2BodyRotation;
+				CurrentLevelMessage.Instance.bodyRotation = LevelsMessage.level2BodyRotation;
 			}
 			break;
 		default:
 			MapObj = Instantiate (level1) as GameObject;
-			CurrentLevelMessage.Instance.name = LevelsMessage.Level1Name;
+			CurrentLevelMessage.Instance.name = LevelsMessage.level1Name;
 			if (CurrentLevelMessage.Instance.bornPosition.x == MazeTool.errorFloat) {
-				CurrentLevelMessage.Instance.bornPosition = LevelsMessage.Level1BornPosition;
+				CurrentLevelMessage.Instance.bornPosition = LevelsMessage.level1BornPosition;
 			}
 			if (CurrentLevelMessage.Instance.bodyRotation.x == MazeTool.errorFloat) {
-				CurrentLevelMessage.Instance.bodyRotation = LevelsMessage.Level1BodyRotation;
+				CurrentLevelMessage.Instance.bodyRotation = LevelsMessage.level1BodyRotation;
 			}
 			CurrentLevelMessage.Instance.levelIndex = 1;
 			break;

@@ -31,5 +31,5 @@ public enum DialogViewType{
 
 public enum DialogHitType{
 	Exit,
-
+	FindArchive,
 }

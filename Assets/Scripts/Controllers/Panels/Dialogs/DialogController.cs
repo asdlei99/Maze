@@ -6,6 +6,7 @@ public class DialogController : PanelController{
 
 	protected string title = "提示";
 	protected string content = "";
+//	protected string confirmBtnText = "确定";
 	protected DialogHitType hitType;
 
 	protected const string dialogPath = "Panel";
@@ -33,7 +34,9 @@ public class DialogController : PanelController{
 	protected void Init(){
 		this.transform.FindChild (titleTextPath).gameObject.GetComponent<Text>().text = title;
 		this.transform.FindChild (contentTextPath).gameObject.GetComponent<Text>().text = content;
-		this.transform.FindChild (confirmBtnPath).gameObject.GetComponent<Button> ().onClick.AddListener (delegate {
+
+		Button confirmBtn = this.transform.FindChild (confirmBtnPath).gameObject.GetComponent<Button> ();
+		confirmBtn.onClick.AddListener (delegate {
 			SetActive(false);
 			if(confirmBtnClicked != null){
 				confirmBtnClicked(hitType);

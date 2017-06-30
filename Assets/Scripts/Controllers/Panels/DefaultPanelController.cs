@@ -209,7 +209,7 @@ public class DefaultPanelController : PanelController {
 		switch(type){
 		case DialogHitType.Exit:
 			SaveMapMessage ();
-			SceneManager.LoadSceneAsync ("Main");
+			SceneManager.LoadSceneAsync ("SelectLevel");
 			break;
 		}
 	}
