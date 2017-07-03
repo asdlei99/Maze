@@ -10,8 +10,8 @@ public class FirstPerson : MonoBehaviour {
 	[System.Serializable]
 	public class MoveSetting {
 		public float ForwardSpeed = 10f;
-		public float BackSpeed = 6f;
-		public float HorizonSpeed = 6f;
+		public float BackSpeed = 4f;
+		public float HorizonSpeed = 4f;
 
 		public float RunValue = 12f;
 	}

@@ -7,10 +7,10 @@ public class CurrentLevelMessage {
 	private static CurrentLevelMessage instance = null;
 	private const string fileName = "MapInfo.txt";
 
-	public int levelIndex = 0;
-	public Vector3 bornPosition;
-	public Quaternion bodyRotation;
-	public Quaternion headRotation;
+	public int levelIndex = (int)MazeTool.errorFloat;
+	public Vector3 bornPosition = new Vector3(MazeTool.errorFloat, 0, 0);
+	public Quaternion bodyRotation = new Quaternion(MazeTool.errorFloat, 0, 0, 0);
+	public Quaternion headRotation = new Quaternion(0, 0, 0, 1);
 	public string name;
 
 	public class ProjectorMessage {

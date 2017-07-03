@@ -8,6 +8,7 @@ public class MapController : MonoBehaviour {
 	[SerializeField]private GameObject level2;
 
 	void Awake () {
+
 		GameObject MapObj;
 		switch (CurrentLevelMessage.Instance.levelIndex) {
 //		case 1:
