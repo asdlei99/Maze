@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class MainController : MonoBehaviour {
 
+	void Awake(){
+		PT_ThirdNoticer.InitThirdNoticer ();
+	}
+
 	void Start () {
 		GameObject.Find ("StartBtn").GetComponent<Button> ().onClick.AddListener (delegate {
 			Player.Instance.maxLevel = 1;

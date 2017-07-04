@@ -7,9 +7,11 @@ using System.Collections;
 public class Toast : MonoBehaviour {
 
 	void Start () {
-		GetComponent<Image> ().color = new Color (0, 0, 0, 0.3f);
+		GetComponent<Image> ().color = new Color (0, 0, 0, 0);
 		Text text = transform.GetChild (0).gameObject.GetComponent<Text> () as Text;
 		GetComponent<RectTransform> ().sizeDelta = new Vector2 (text.preferredWidth + 20f, 40f);
+
+		StartCoroutine (ToastAnim());
 		StartCoroutine (WaitToDestroy());
 	}
 	
@@ -33,11 +35,20 @@ public class Toast : MonoBehaviour {
 		text.rectTransform.sizeDelta = new Vector2 (text.preferredWidth, 30);
 
 		text.transform.SetParent (toast.transform, false);
-
 	}
 
 	private IEnumerator WaitToDestroy(){
 		yield return new WaitForSeconds(1f);
 		Destroy (this.gameObject);
+	}
+
+	private IEnumerator ToastAnim(){
+		for (int i = 0; i < 10; i++) {
+			transform.localPosition += Vector3.up * 2;
+			Color c = GetComponent<Image> ().color;
+			c.a += 0.03f;
+			GetComponent<Image> ().color = c;
+			yield return new WaitForSeconds (0.01f);
+		}
 	}
 }

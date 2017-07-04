@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Compenents\Toast.cs" />
      <Compile Include="Assets\Scripts\Controllers\LevelTitleController.cs" />
      <Compile Include="Assets\Scripts\Controllers\LoadingController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\LoginController.cs" />
      <Compile Include="Assets\Scripts\Controllers\MainController.cs" />
      <Compile Include="Assets\Scripts\Controllers\MapController.cs" />
      <Compile Include="Assets\Scripts\Controllers\PaintProjectorController.cs" />
@@ -62,6 +63,7 @@
      <Compile Include="Assets\Scripts\Controllers\Panels\SelectLevelPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Panels\SettingPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\RockerController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\SkyboxController.cs" />
      <Compile Include="Assets\Scripts\Controllers\WallController.cs" />
      <Compile Include="Assets\Scripts\FinishTriggerController.cs" />
      <Compile Include="Assets\Scripts\FirstPerson.cs" />
@@ -72,6 +74,13 @@
      <Compile Include="Assets\Scripts\Models\CurrentLevelMessage.cs" />
      <Compile Include="Assets\Scripts\Models\Player.cs" />
      <Compile Include="Assets\Scripts\Models\SettingInfo.cs" />
+     <Compile Include="Assets\Scripts\Platfrom\PAndroidInterface.cs" />
+     <Compile Include="Assets\Scripts\Platfrom\PCallback.cs" />
+     <Compile Include="Assets\Scripts\Platfrom\PClazzNames.cs" />
+     <Compile Include="Assets\Scripts\Platfrom\PCommonInterface.cs" />
+     <Compile Include="Assets\Scripts\Platfrom\PEventMessage.cs" />
+     <Compile Include="Assets\Scripts\Platfrom\PIOSInterface.cs" />
+     <Compile Include="Assets\Scripts\Platfrom\PT_ThirdNoticer.cs" />
      <Compile Include="Assets\Scripts\Tools\FileTool.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
