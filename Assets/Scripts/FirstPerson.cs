@@ -132,6 +132,7 @@ public class FirstPerson : MonoBehaviour {
 				ProgressStepCycle(currentSpeed);
 				//当前速度不能大于规定速度（Magnitude方法，需要开平方根，使用sqr节省运算）  
 				if (m_rigidbody.velocity.sqrMagnitude < currentSpeed * currentSpeed) {
+					MoveStop ();
 					//给刚体施加（坡度计算后）的力  
 					m_rigidbody.AddForce (desireMove, ForceMode.Impulse);
 				}

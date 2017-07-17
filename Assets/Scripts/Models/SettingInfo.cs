@@ -9,7 +9,6 @@ public class SettingInfo {
 
 	public bool isOpenViewRocker;
 	public bool isOpenAudio;
-	private const string fileName = "settingInfo.txt";
 
 	public static SettingInfo Instance{
 		get{
@@ -21,12 +20,8 @@ public class SettingInfo {
 	}
 
 	public void Save(){
-		JsonObject settingJson = new JsonObject();
-		settingJson ["isOpenViewRocker"] = isOpenViewRocker;
-		settingJson ["isOpenAudio"] = isOpenAudio;
-
-		FileTool fileTool = new FileTool();
-		fileTool.WriteFile (Application.persistentDataPath, fileName, settingJson.ToString());
+		PlayerPrefs.SetString ("isOpenViewRocker", isOpenViewRocker.ToString());
+		PlayerPrefs.SetString ("isOpenAudio", isOpenAudio.ToString());
 	}
 
 	public void Init(){
@@ -36,23 +31,12 @@ public class SettingInfo {
 		isOpenViewRocker = true;
 		#endif
 
-		FileTool fileTool = new FileTool ();
-//		Debug.Log (Application.persistentDataPath);
-		ArrayList list = fileTool.LoadFile (Application.persistentDataPath, fileName);
-		if (list != null) {
-			object settingObj = new object ();
-			if (SimpleJson.SimpleJson.TryDeserializeObject (list [0].ToString(), out settingObj)) {
-				JsonObject settingJson = (JsonObject)settingObj;
-				object openViewRocker;
-				if (settingJson.TryGetValue ("isOpenViewRocker", out openViewRocker)) {
-					bool.TryParse (openViewRocker.ToString (), out isOpenViewRocker);
-				}
+		if (PlayerPrefs.HasKey ("isOpenViewRocker")) {
+			bool.TryParse (PlayerPrefs.GetString ("isOpenViewRocker"), out isOpenViewRocker);
+		}
 
-				object openAudio;
-				if (settingJson.TryGetValue ("isOpenAudio", out openAudio)) {
-					bool.TryParse (openAudio.ToString (), out isOpenAudio);
-				}
-			}
-		} 
+		if (PlayerPrefs.HasKey ("isOpenAudio")) {
+			bool.TryParse (PlayerPrefs.GetString ("isOpenAudio"), out isOpenAudio);
+		}
 	}
 }
