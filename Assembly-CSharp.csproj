@@ -81,6 +81,7 @@
      <Compile Include="Assets\Scripts\Platfrom\PEventMessage.cs" />
      <Compile Include="Assets\Scripts\Platfrom\PIOSInterface.cs" />
      <Compile Include="Assets\Scripts\Platfrom\PT_ThirdNoticer.cs" />
+     <Compile Include="Assets\Scripts\Tools\AssetBundleConfig.cs" />
      <Compile Include="Assets\Scripts\Tools\FileTool.cs" />
      <None Include="Assets\Shaders\WallShade.shader" />
      <None Include="Assets\Shaders\ProjectorImage.shader" />
