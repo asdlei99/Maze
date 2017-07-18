@@ -10,15 +10,8 @@ public class CustomEditor {
 	// 打包输出目录
 	private static string RES_OUTPUT_PATH = "Assets/StreamingAssets";
 
-//	// xml文件生成器
-//	private static XMLDocment doc;
-//	// bundleName <-> List<AssetBuildBundleInfo>
-//	private static Dictionary<string, List<AssetBuildBundleInfo>> bundleMap = new Dictionary<string, List<AssetBuildBundleInfo>>();
-//	// 文件名 <-> AssetBuildBundleInfo
-//	private static Dictionary<string, AssetBuildBundleInfo> fileMap = new Dictionary<string, AssetBuildBundleInfo>();
-
 	[MenuItem("CustomEditor/Build AssetBundle")]
-	public static void Pack() {
+	public static void BuildAssetBundle() {
 		// 清理输出目录
 		CreateOrClearOutPath();
 
@@ -26,15 +19,13 @@ public class CustomEditor {
 		ClearAssetBundleName();
 
 		// 设置bunderName
-//		bundleMap.Clear();
 		List<string> resList = GetAllResDirs (RES_SRC_PATH);
 		foreach (string dir in resList) {
-			Debug.Log (dir);
+//			Debug.Log (dir);
 			setAssetBundleName (dir);
 		}
-		return;
 		// 打包
-		BuildPipeline.BuildAssetBundles(RES_OUTPUT_PATH, BuildAssetBundleOptions.DeterministicAssetBundle, BuildTarget.StandaloneOSXIntel);
+		BuildPipeline.BuildAssetBundles(RES_OUTPUT_PATH, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneOSXIntel);
 		AssetDatabase.Refresh ();
 	}
 
@@ -42,8 +33,7 @@ public class CustomEditor {
 	/// 设置AssetBundleName
 	/// </summary>
 	/// <param name="fullpath">Fullpath.</param>
-	public static void setAssetBundleName(string fullPath) 
-	{
+	public static void setAssetBundleName(string fullPath) {
 		string[] files = System.IO.Directory.GetFiles (fullPath);
 		if (files == null || files.Length == 0) {
 			return;
@@ -52,7 +42,6 @@ public class CustomEditor {
 		string dirBundleName = fullPath.Substring (RES_SRC_PATH.Length);
 		dirBundleName = dirBundleName + AssetBundleConfig.suffix;
 		foreach (string file in files) {
-			Debug.Log (file);
 			if (file.EndsWith (".meta")) {
 				continue;
 			}
@@ -60,7 +49,7 @@ public class CustomEditor {
 			if (importer != null) {
 				string ext = System.IO.Path.GetExtension (file);
 				string bundleName = dirBundleName;
-				if (null != ext && (ext.Equals (".prefab")||ext.Equals(".unity"))) {
+				if (null != ext){// && (ext.Equals (".prefab")||ext.Equals(".unity"))) {
 					// prefab单个文件打包
 					bundleName = file.Substring (RES_SRC_PATH.Length);
 					if (null != ext) {
@@ -71,27 +60,8 @@ public class CustomEditor {
 
 				}
 				bundleName = bundleName.ToLower ();
-				Debug.LogFormat ("Set AssetName Succ, File:{0}, AssetName:{1}", file, bundleName);
 				importer.assetBundleName = bundleName;
 				EditorUtility.UnloadUnusedAssetsImmediate();
-
-				// 存储bundleInfo
-				//				AssetBuildBundleInfo info = new AssetBuildBundleInfo();
-				//				info.assetName = file;
-				//				info.fileName = file;
-				//				info.bundleName = bundleName;
-				//				if (null != ext) {
-				//					info.fileName = file.Substring (0, file.IndexOf (ext));
-				//				}
-				//				fileMap.Add (file, info);
-				//
-				//				List<AssetBuildBundleInfo> infoList = null;
-				//				bundleMap.TryGetValue(info.bundleName, out infoList);
-				//				if (null == infoList) {
-				//					infoList = new List<AssetBuildBundleInfo> ();
-				//					bundleMap.Add (info.bundleName, infoList);
-				//				}
-				//				infoList.Add (info);
 			} else {
 				Debug.LogFormat ("Set AssetName Fail, File:{0}, Msg:Importer is null", file);
 			}
@@ -120,10 +90,10 @@ public class CustomEditor {
 		if ((dirList == null) || (string.IsNullOrEmpty (fullPath))) {
 			return;
 		}
-
 		string[] dirs = System.IO.Directory.GetDirectories (fullPath);
 		if (dirs != null && dirs.Length > 0) {
-			for (int i = 0; i < dirs.Length; ++i) {
+			dirList.Add (fullPath);
+			for (int i = 0; i < dirs.Length; i++) {
 				GetAllSubResDirs (dirs [i], dirList);
 			}
 		} else {

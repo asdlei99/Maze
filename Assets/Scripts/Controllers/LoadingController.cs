@@ -12,10 +12,13 @@ public class LoadingController : MonoBehaviour {
 	//异步对象
 	AsyncOperation async;
 
+	private string s0 = "materials/skyboxs/s0/skybox0.assetbundle";
+
 	//读取场景的进度，它的取值范围在0 - 1 之间。
 	int progress = 0;
 
 	void Start() {
+		LoadSkyBox ();
 		//在这里开启一个异步任务，
 		//进入loadScene方法。
 		StartCoroutine (loadScene ());
@@ -51,7 +54,7 @@ public class LoadingController : MonoBehaviour {
 	}
 
 	//这是一个简单绘制2D动画的方法，没什么好说的。
-	void   DrawAnimation(Texture2D[] tex) {
+	void DrawAnimation(Texture2D[] tex) {
 		time += Time.deltaTime;
 
 		if (time >= 1.0 / fps) {
@@ -66,5 +69,9 @@ public class LoadingController : MonoBehaviour {
 
 		//在这里显示读取的进度。
 		GUI.Label (new Rect (100, 180, 300, 60), "lOADING!!!!!" + progress);
+	}
+
+	void LoadSkyBox(){
+		SkyboxController.m = AssetBundleConfig.LoadAssetBundle<Material>(s0, "Skybox0.mat");
 	}
 }
