@@ -4,17 +4,46 @@ using System.Collections;
 public class AssetBundleConfig {
 	public static readonly string suffix = ".assetbundle";
 	public static readonly string streamingAssetsFileName = "StreamingAssets";
+	public static AssetBundleManifest mainfest;
 
-	public static T LoadAssetBundle<T>(string assetbundlePath, string fileName) where T: Object{
-		AssetBundle ab = AssetBundle.LoadFromFile (streamingAssetsPath + streamingAssetsFileName);
-		AssetBundleManifest mainfest = (AssetBundleManifest)ab.LoadAsset("AssetBundleManifest");
-		string[] dps = mainfest.GetAllDependencies(assetbundlePath);
-		for (int i = 0; i < dps.Length; i++) {
-//			Debug.Log ("dps---"+dps[i]);
-			AssetBundle.LoadFromFile (streamingAssetsPath + dps[i]);
+	public static AssetBundleManifest Mainfest{
+		get{ 
+			if (mainfest == null) {
+				AssetBundle ab = AssetBundle.LoadFromFile (streamingAssetsPath + streamingAssetsFileName);
+				if (ab != null) {
+					mainfest = (AssetBundleManifest)ab.LoadAsset ("AssetBundleManifest");
+				} else {
+					Debug.Log ("Get Mainfest Error");
+					return null;
+				}
+			}
+			return mainfest;
 		}
-		AssetBundle needAB = AssetBundle.LoadFromFile (streamingAssetsPath + assetbundlePath);
-		return needAB.LoadAsset<T> (fileName);
+	}
+
+	public static T LoadAssetBundle<T>(string assetbundlePath, string fileName = null) where T: Object{
+		if (Mainfest != null) {
+			string[] dps = Mainfest.GetAllDependencies (assetbundlePath);
+			AssetBundle[] abarr = new AssetBundle[dps.Length];
+			for (int i = 0; i < dps.Length; i++) {
+				abarr [i] = AssetBundle.LoadFromFile (streamingAssetsPath + dps [i]);
+			}
+			AssetBundle needAB = AssetBundle.LoadFromFile (streamingAssetsPath + assetbundlePath);
+			if (needAB != null) {
+				T obj;
+				if (fileName == null) {
+					obj = needAB.LoadAllAssets<T> () [0];
+				} else {
+					obj = needAB.LoadAsset<T> (fileName);
+				}
+				needAB.Unload (false);
+				foreach (AssetBundle ab in abarr) {
+					ab.Unload (false);
+				}
+				return obj;
+			}
+		}
+		return null;
 	}
 
 	//不同平台下StreamingAssets的路径是不同的，这里需要注意一下。

@@ -1,9 +1,9 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{EF6CBECB-758A-180D-FC17-CB7807C26BE5}") = "Maze", "Assembly-CSharp.csproj", "{203E294F-6A57-B963-05D6-83EB30201135}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maze", "Assembly-CSharp.csproj", "{203E294F-6A57-B963-05D6-83EB30201135}"
 EndProject
-Project("{EF6CBECB-758A-180D-FC17-CB7807C26BE5}") = "Maze", "Assembly-CSharp-Editor.csproj", "{C20B416B-26C4-F6EF-C2C2-161257B5C912}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maze", "Assembly-CSharp-Editor.csproj", "{C20B416B-26C4-F6EF-C2C2-161257B5C912}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

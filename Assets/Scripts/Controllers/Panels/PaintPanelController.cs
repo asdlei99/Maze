@@ -16,7 +16,7 @@ public class PaintPanelController : PanelController, IPointerClickHandler {
 		GBEventListener.Get(paint0.gameObject).onClick = BtnOnClickListener;
 		GBEventListener.Get(paint1.gameObject).onClick = BtnOnClickListener;
 		GBEventListener.Get(paint2.gameObject).onClick = BtnOnClickListener;
-		GBEventListener.Get (this.transform.FindChild ("SelectPanel").gameObject).onClick = null;
+		GBEventListener.Get (this.transform.Find ("SelectPanel").gameObject).onClick = null;
 	}
 	
 	void Update () {

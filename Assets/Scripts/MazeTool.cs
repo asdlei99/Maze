@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MazeTool {
 	public static float errorFloat = -999f;
+	public static string shareImgPath = Application.persistentDataPath + "/share.png";
 
 	public static Quaternion StringToQuaternion(string s){
 		Quaternion q = new Quaternion (0, 0, 0, 0);
@@ -47,5 +48,23 @@ public class MazeTool {
 			}
 		}
 		return v;
+	}
+
+	//截图 rect截图窗口大小
+	public static Texture2D CaptureScreenshot(Rect rect) {
+		// 先创建一个的空纹理，大小可根据实现需要来设置  
+		Texture2D screenShot = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false); 
+
+		// 读取屏幕像素信息并存储为纹理数据，  
+		screenShot.ReadPixels(rect, 0, 0);  
+		screenShot.Apply();  
+
+		// 然后将这些纹理数据，成一个png图片文件  
+		byte[] bytes = screenShot.EncodeToPNG();
+		System.IO.File.WriteAllBytes(shareImgPath, bytes);  
+		Debug.Log(string.Format("wjr----截屏了一张图片: {0}", shareImgPath));
+
+		// 最后，我返回这个Texture2d对象，这样我们直接，所这个截图图示在游戏中，当然这个根据自己的需求的。  
+		return screenShot;  
 	}
 }

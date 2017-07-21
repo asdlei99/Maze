@@ -32,10 +32,10 @@ public class DialogController : PanelController{
 	}
 
 	protected void Init(){
-		this.transform.FindChild (titleTextPath).gameObject.GetComponent<Text>().text = title;
-		this.transform.FindChild (contentTextPath).gameObject.GetComponent<Text>().text = content;
+		this.transform.Find (titleTextPath).gameObject.GetComponent<Text>().text = title;
+		this.transform.Find (contentTextPath).gameObject.GetComponent<Text>().text = content;
 
-		Button confirmBtn = this.transform.FindChild (confirmBtnPath).gameObject.GetComponent<Button> ();
+		Button confirmBtn = this.transform.Find (confirmBtnPath).gameObject.GetComponent<Button> ();
 		confirmBtn.onClick.AddListener (delegate {
 			SetActive(false);
 			if(confirmBtnClicked != null){

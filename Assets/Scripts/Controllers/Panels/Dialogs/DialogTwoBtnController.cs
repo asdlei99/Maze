@@ -11,7 +11,7 @@ public class DialogTwoBtnController : DialogController {
 
 	void Start () {
 		Init ();
-		this.transform.FindChild (cancelBtnPath).gameObject.GetComponent<Button> ().onClick.AddListener (delegate {
+		this.transform.Find (cancelBtnPath).gameObject.GetComponent<Button> ().onClick.AddListener (delegate {
 			SetActive(false);
 			if(cancelBtnClicked != null){
 				cancelBtnClicked(hitType);

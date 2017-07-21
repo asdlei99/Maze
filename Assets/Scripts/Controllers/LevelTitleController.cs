@@ -10,7 +10,7 @@ public class LevelTitleController : MonoBehaviour, IPointerClickHandler {
 	public Transform parentTransform;
 
 	void Start(){
-		Image image = transform.FindChild ("Image").gameObject.GetComponent<Image> () as Image;
+		Image image = transform.Find ("Image").gameObject.GetComponent<Image> () as Image;
 		if (level > Player.Instance.maxLevel) {
 			image.color = new Color (0.8f, 0.8f, 0.8f);
 		}

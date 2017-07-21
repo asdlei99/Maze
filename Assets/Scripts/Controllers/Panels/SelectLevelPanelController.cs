@@ -94,11 +94,11 @@ public class SelectLevelPanelController : PanelController {
 		passObj.transform.SetParent (m_Transform, false);
 		passObj.transform.SetSiblingIndex (0);
 
-		passObj.transform.FindChild (LevelTitlePath + Level1TitleName).gameObject.GetComponent<LevelTitleController> ().Init (m_Transform, (passIndex - 1) * 5 + 1);
-		passObj.transform.FindChild (LevelTitlePath + Level2TitleName).gameObject.GetComponent<LevelTitleController> ().Init (m_Transform, (passIndex - 1) * 5 + 2);
-		passObj.transform.FindChild (LevelTitlePath + Level3TitleName).gameObject.GetComponent<LevelTitleController> ().Init (m_Transform, (passIndex - 1) * 5 + 3);
-		passObj.transform.FindChild (LevelTitlePath + Level4TitleName).gameObject.GetComponent<LevelTitleController> ().Init (m_Transform, (passIndex - 1) * 5 + 4);
-		passObj.transform.FindChild (LevelTitlePath + Level5TitleName).gameObject.GetComponent<LevelTitleController> ().Init (m_Transform, (passIndex - 1) * 5 + 5);
+		passObj.transform.Find (LevelTitlePath + Level1TitleName).gameObject.GetComponent<LevelTitleController> ().Init (m_Transform, (passIndex - 1) * 5 + 1);
+		passObj.transform.Find (LevelTitlePath + Level2TitleName).gameObject.GetComponent<LevelTitleController> ().Init (m_Transform, (passIndex - 1) * 5 + 2);
+		passObj.transform.Find (LevelTitlePath + Level3TitleName).gameObject.GetComponent<LevelTitleController> ().Init (m_Transform, (passIndex - 1) * 5 + 3);
+		passObj.transform.Find (LevelTitlePath + Level4TitleName).gameObject.GetComponent<LevelTitleController> ().Init (m_Transform, (passIndex - 1) * 5 + 4);
+		passObj.transform.Find (LevelTitlePath + Level5TitleName).gameObject.GetComponent<LevelTitleController> ().Init (m_Transform, (passIndex - 1) * 5 + 5);
 	}
 
 	public override void DialogConfirmBtnClicked(DialogHitType type){

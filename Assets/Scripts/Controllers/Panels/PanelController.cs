@@ -21,7 +21,7 @@ public class PanelController : MonoBehaviour {
 
 	public void ShowDialog(string title, string content, DialogHitType hitType){
 		if (dialogTwoBtn == null) {
-			dialogTwoBtn = this.transform.parent.FindChild("DialogTwoBtn").gameObject.GetComponent<DialogTwoBtnController>() as DialogTwoBtnController;
+			dialogTwoBtn = this.transform.parent.Find("DialogTwoBtn").gameObject.GetComponent<DialogTwoBtnController>() as DialogTwoBtnController;
 		}
 		dialogTwoBtn.InitContent (title, content, hitType);
 		dialogTwoBtn.confirmBtnClicked = DialogConfirmBtnClicked;

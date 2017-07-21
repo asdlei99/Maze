@@ -7,6 +7,8 @@ public class MapController : MonoBehaviour {
 	[SerializeField]private GameObject level1;
 	[SerializeField]private GameObject level2;
 
+	public static Material sktboxMat;
+
 	void Awake () {
 
 		GameObject MapObj;
@@ -40,6 +42,9 @@ public class MapController : MonoBehaviour {
 	}
 
 	void Start(){
+		if (sktboxMat != null) {
+			RenderSettings.skybox = sktboxMat;
+		}
 		for (int i = 0; i < CurrentLevelMessage.Instance.projectorMessageList.Count; i++) {
 			CurrentLevelMessage.ProjectorMessage pm = CurrentLevelMessage.Instance.projectorMessageList [i];
 			Paint (pm.position, pm.rotation, pm.type);

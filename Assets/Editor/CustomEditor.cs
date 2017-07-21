@@ -21,11 +21,11 @@ public class CustomEditor {
 		// 设置bunderName
 		List<string> resList = GetAllResDirs (RES_SRC_PATH);
 		foreach (string dir in resList) {
-//			Debug.Log (dir);
 			setAssetBundleName (dir);
 		}
 		// 打包
 		BuildPipeline.BuildAssetBundles(RES_OUTPUT_PATH, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneOSXIntel);
+//		BuildPipeline.BuildAssetBundles(RES_OUTPUT_PATH, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.iOS);
 		AssetDatabase.Refresh ();
 	}
 

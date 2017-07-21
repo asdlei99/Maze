@@ -72,6 +72,6 @@ public class LoadingController : MonoBehaviour {
 	}
 
 	void LoadSkyBox(){
-		SkyboxController.m = AssetBundleConfig.LoadAssetBundle<Material>(s0, "Skybox0.mat");
+		MapController.sktboxMat = AssetBundleConfig.LoadAssetBundle<Material>(s0);
 	}
 }
