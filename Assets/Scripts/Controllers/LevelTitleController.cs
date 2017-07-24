@@ -27,13 +27,31 @@ public class LevelTitleController : MonoBehaviour, IPointerClickHandler {
 				Toast.Show (parentTransform, "该关卡尚未开启，请先通关前面关卡");
 			} else {
 				if (level == CurrentLevelMessage.Instance.levelIndex) {
-					parentTransform.gameObject.GetComponent<SelectLevelPanelController> ().ShowDialog ("提示", "发现存档，是否从存档处继续游戏？",DialogHitType.FindArchive);
+					DialogTool.ShowTwoBtnDialog (parentTransform, "提示", "发现存档，是否从存档处继续游戏？", DialogHitType.FindArchive,
+						DialogConfirmBtnClicked, DialogCancelBtnClicked);
 				} else {
 					CurrentLevelMessage.Instance.levelIndex = level;
 					CurrentLevelMessage.Instance.Reset ();
 					SceneManager.LoadSceneAsync ("Loading");
 				}
 			}
+		}
+	}
+
+	private void DialogConfirmBtnClicked(DialogHitType type){
+		switch(type){
+		case DialogHitType.FindArchive:
+			SceneManager.LoadSceneAsync ("Loading");
+			break;
+		}
+	}
+
+	private void DialogCancelBtnClicked(DialogHitType type){
+		switch(type){
+		case DialogHitType.FindArchive:
+			CurrentLevelMessage.Instance.Reset ();
+			SceneManager.LoadSceneAsync ("Loading");
+			break;
 		}
 	}
 }

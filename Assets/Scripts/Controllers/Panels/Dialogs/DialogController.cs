@@ -9,10 +9,9 @@ public class DialogController : PanelController{
 //	protected string confirmBtnText = "确定";
 	protected DialogHitType hitType;
 
-	protected const string dialogPath = "Panel";
-	protected const string titleTextPath = dialogPath + "/TitleText";
-	protected const string contentTextPath = dialogPath + "/ContentText";
-	protected const string confirmBtnPath = dialogPath + "/BtnPanel/ConfirmBtn";
+	[SerializeField]protected Text titleText;
+	[SerializeField]protected Text contentText;
+	[SerializeField]protected Button confirmBtn;
 
 	public delegate void ConfirmBtnClicked(DialogHitType hitType); 
 	public ConfirmBtnClicked confirmBtnClicked;
@@ -32,10 +31,9 @@ public class DialogController : PanelController{
 	}
 
 	protected void Init(){
-		this.transform.Find (titleTextPath).gameObject.GetComponent<Text>().text = title;
-		this.transform.Find (contentTextPath).gameObject.GetComponent<Text>().text = content;
+		titleText.text = title;
+		contentText.text = content;
 
-		Button confirmBtn = this.transform.Find (confirmBtnPath).gameObject.GetComponent<Button> ();
 		confirmBtn.onClick.AddListener (delegate {
 			if(confirmBtnClicked != null){
 				confirmBtnClicked(hitType);

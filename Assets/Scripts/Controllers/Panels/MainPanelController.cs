@@ -25,7 +25,6 @@ public class MainPanelController : PanelController {
 
 	void ShowMarketBtnPanel(GameObject obj){
 		DialogTool.ShowTwoBtnDialog (this.transform, "a", "b", DialogHitType.Exit, null, test);
-//		dialog.cancelBtnClicked = test;
 	}
 
 	void test(DialogHitType type){

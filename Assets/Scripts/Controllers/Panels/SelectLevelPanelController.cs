@@ -102,19 +102,10 @@ public class SelectLevelPanelController : PanelController {
 	}
 
 	public override void DialogConfirmBtnClicked(DialogHitType type){
-		switch(type){
-		case DialogHitType.FindArchive:
-			SceneManager.LoadSceneAsync ("Loading");
-			break;
-		}
+		
 	}
 
 	public override void DialogCancelBtnClicked(DialogHitType type){
-		switch(type){
-		case DialogHitType.FindArchive:
-			CurrentLevelMessage.Instance.Reset ();
-			SceneManager.LoadSceneAsync ("Loading");
-			break;
-		}
+		
 	}
 }

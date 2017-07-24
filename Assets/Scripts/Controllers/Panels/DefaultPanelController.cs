@@ -156,7 +156,8 @@ public class DefaultPanelController : PanelController {
 		}else if(obj.name == SettingBtnName){
 			settingController.SetActive (true);
 		}else if(obj.name == ExitBtnName){
-			ShowDialog ("提示", "确定要退出游戏吗？", DialogHitType.Exit);
+			DialogTool.ShowTwoBtnDialog (this.transform, "提示", "确定要退出游戏吗？", DialogHitType.Exit,
+				DialogConfirmBtnClicked, DialogCancelBtnClicked);
 		}
 	}
 

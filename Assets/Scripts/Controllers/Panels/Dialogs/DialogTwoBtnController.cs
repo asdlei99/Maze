@@ -7,7 +7,6 @@ public class DialogTwoBtnController : DialogController {
 	public delegate void CancelBtnClicked(DialogHitType type); 
 	public CancelBtnClicked cancelBtnClicked;
 
-//	private const string cancelBtnPath = dialogPath + "/BtnPanel/CancelBtn";
 	[SerializeField]private Button cancelBtn;
 
 	void Start () {
