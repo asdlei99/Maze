@@ -24,7 +24,8 @@ public class MainPanelController : PanelController {
 	}
 
 	void ShowMarketBtnPanel(GameObject obj){
-		DialogTool.ShowTwoBtnDialog (this.transform, "a", "b", DialogHitType.Exit, null, test);
+		DialogTool.ShowOneBtnDialog (this.transform, "a", "b", DialogHitType.Exit, test);
+//		DialogTool.ShowTwoBtnDialog (this.transform, "a", "b", DialogHitType.Exit, null, test);
 	}
 
 	void test(DialogHitType type){
