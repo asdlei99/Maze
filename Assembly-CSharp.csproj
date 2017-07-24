@@ -60,10 +60,10 @@
      <Compile Include="Assets\Scripts\Controllers\MainController.cs" />
      <Compile Include="Assets\Scripts\Controllers\MapController.cs" />
      <Compile Include="Assets\Scripts\Controllers\PaintProjectorController.cs" />
-     <Compile Include="Assets\Scripts\Controllers\Panels\DefaultPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Panels\Dialogs\DialogController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Panels\Dialogs\DialogTwoBtnController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Panels\EndPanelController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Panels\GamePanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Panels\MainPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Panels\PaintPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Panels\PanelController.cs" />

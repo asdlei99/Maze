@@ -9,9 +9,9 @@ public class PanelController : MonoBehaviour {
 	public void SetActive(bool isActive){
 		this.gameObject.SetActive (isActive);
 		if (isActive) {
-			DefaultPanelController.isCouldViewTurn = false;
+			GamePanelController.isCouldViewTurn = false;
 		} else {
-			DefaultPanelController.isCouldViewTurn = true;
+			GamePanelController.isCouldViewTurn = true;
 
 			if ("SettingPanel".Equals (name)) {
 				SettingInfo.Instance.Save ();

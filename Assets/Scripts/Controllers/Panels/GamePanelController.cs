@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class DefaultPanelController : PanelController {
+public class GamePanelController : PanelController {
 
 	[SerializeField]private FirstPerson firstPerson;
 	[SerializeField]private MapController mapController;

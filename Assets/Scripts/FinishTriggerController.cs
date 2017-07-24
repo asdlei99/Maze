@@ -6,8 +6,8 @@ public class FinishTriggerController : MonoBehaviour {
 	void OnTriggerEnter(Collider collider){
 		//进入触发器执行的代码
 		if (collider.gameObject.name == "FirstPerson") {
-			if(DefaultPanelController.gameEnd != null){
-				DefaultPanelController.gameEnd ();
+			if(GamePanelController.gameEnd != null){
+				GamePanelController.gameEnd ();
 			}
 		}
 	}
