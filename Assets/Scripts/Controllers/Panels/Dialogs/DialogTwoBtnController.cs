@@ -7,15 +7,16 @@ public class DialogTwoBtnController : DialogController {
 	public delegate void CancelBtnClicked(DialogHitType type); 
 	public CancelBtnClicked cancelBtnClicked;
 
-	private const string cancelBtnPath = dialogPath + "/BtnPanel/CancelBtn";
+//	private const string cancelBtnPath = dialogPath + "/BtnPanel/CancelBtn";
+	[SerializeField]private Button cancelBtn;
 
 	void Start () {
 		Init ();
-		this.transform.Find (cancelBtnPath).gameObject.GetComponent<Button> ().onClick.AddListener (delegate {
-			SetActive(false);
+		cancelBtn.onClick.AddListener (delegate {
 			if(cancelBtnClicked != null){
 				cancelBtnClicked(hitType);
 			}
+			Destroy();
 		});
 	}
 

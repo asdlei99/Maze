@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 002df3d10b06d48a0b09241a45a8da6c
+timeCreated: 1500607246
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Adobe Fangsong Std
+  fontNames:
+  - Adobe Fangsong Std
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

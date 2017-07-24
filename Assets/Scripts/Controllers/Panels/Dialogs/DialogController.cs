@@ -37,10 +37,14 @@ public class DialogController : PanelController{
 
 		Button confirmBtn = this.transform.Find (confirmBtnPath).gameObject.GetComponent<Button> ();
 		confirmBtn.onClick.AddListener (delegate {
-			SetActive(false);
 			if(confirmBtnClicked != null){
 				confirmBtnClicked(hitType);
 			}
+			Destroy();
 		});
+	}
+
+	protected void Destroy(){
+		Destroy (this.gameObject);
 	}
 }

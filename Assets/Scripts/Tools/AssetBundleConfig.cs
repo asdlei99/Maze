@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AssetBundleConfig {
 	public static readonly string suffix = ".assetbundle";
@@ -21,7 +22,7 @@ public class AssetBundleConfig {
 		}
 	}
 
-	public static T LoadAssetBundle<T>(string assetbundlePath, string fileName = null) where T: Object{
+	public static T LoadObjByAssetBundle<T>(string assetbundlePath, string fileName = null) where T: Object{
 		if (Mainfest != null) {
 			string[] dps = Mainfest.GetAllDependencies (assetbundlePath);
 			AssetBundle[] abarr = new AssetBundle[dps.Length];
@@ -42,6 +43,20 @@ public class AssetBundleConfig {
 				}
 				return obj;
 			}
+		}
+		return null;
+	}
+
+	public static AssetBundle LoadAssetBundle(string assetbundlePath, Dictionary<string, AssetBundle> dic) {
+		if (Mainfest != null) {
+			string[] dps = Mainfest.GetAllDependencies (assetbundlePath);
+			for (int i = 0; i < dps.Length; i++) {
+				if (!dic.ContainsKey (dps [i])) {
+					dic.Add (dps [i], AssetBundle.LoadFromFile (streamingAssetsPath + dps [i]));
+				}
+			}
+			AssetBundle needAB = AssetBundle.LoadFromFile (streamingAssetsPath + assetbundlePath);
+			return needAB;
 		}
 		return null;
 	}
