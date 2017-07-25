@@ -11,12 +11,13 @@ public class GamePanelController : PanelController {
 	[SerializeField]private SettingPanelController settingController;
 	[SerializeField]private EndPanelController endController;
 	[SerializeField]private RockerController viewRocker;
+	[SerializeField]private Text timeText;
 
 	[HideInInspector]public static bool isCouldViewTurn;
 	[HideInInspector]public delegate void GameEndDelegate();
 	[HideInInspector]public static GameEndDelegate gameEnd;
 
-	private const string PersonRockerPathName = "Canvas/DefaultPanel/PersonRocker/";
+	private const string PersonRockerPathName = "Canvas/GamePanel/PersonRocker/";
 	private const string GoForwardBtnName = "GoForwardBtn";
 	private const string GoBackBtnName = "GoBackBtn";
 	private const string GoLeftBtnName = "GoLeftBtn";
@@ -24,7 +25,7 @@ public class GamePanelController : PanelController {
 
 	private const string PaintBtnName = "PaintBtn";
 
-	private const string BannerName = "Canvas/DefaultPanel/Banner/";
+	private const string BannerName = "Canvas/GamePanel/Banner/";
 	private const string SettingBtnName = "SettingBtn";
 	private const string ExitBtnName = "ExitBtn";
 
@@ -32,6 +33,8 @@ public class GamePanelController : PanelController {
 
 	private DirectionType personMoveDirection;// 人物行走的方向
 	private bool IsCanMove;
+
+	private float time = 0.0f;
 
 	void Awake(){
 		GBEventListener.Get(GameObject.Find (PersonRockerPathName + GoForwardBtnName)).onDown = BtnOnDownListener;
@@ -47,7 +50,7 @@ public class GamePanelController : PanelController {
 		SettingInfo.Instance.Init ();
 		#endif
 
-		GBEventListener.Get(GameObject.Find ("Canvas/DefaultPanel/" + PaintBtnName)).onClick = BtnOnClickListener;
+		GBEventListener.Get(GameObject.Find ("Canvas/GamePanel/" + PaintBtnName)).onClick = BtnOnClickListener;
 		GBEventListener.Get(GameObject.Find (BannerName + SettingBtnName)).onClick = BtnOnClickListener;
 		GBEventListener.Get(GameObject.Find (BannerName + ExitBtnName)).onClick = BtnOnClickListener;
 
@@ -65,7 +68,7 @@ public class GamePanelController : PanelController {
 	}
 
 	void Start () {
-		GameObject.Find ("Canvas/DefaultPanel/Banner/LevelText").GetComponent<Text> ().text = CurrentLevelMessage.Instance.name;
+		GameObject.Find ("Canvas/GamePanel/Banner/LevelText").GetComponent<Text> ().text = CurrentLevelMessage.Instance.name;
 
 		if (!SettingInfo.Instance.isOpenViewRocker) {
 			viewRocker.gameObject.SetActive (false);
@@ -73,6 +76,7 @@ public class GamePanelController : PanelController {
 	}
 	
 	void Update () {
+		SetTimeText ();
 		if(Input.GetKeyDown (KeyCode.W)){
 			personMoveDirection = DirectionType.Forward;
 		}
@@ -213,6 +217,14 @@ public class GamePanelController : PanelController {
 			SceneManager.LoadSceneAsync ("SelectLevel");
 			break;
 		}
+	}
+
+	private void SetTimeText(){
+		time += Time.deltaTime;
+		int t = Mathf.FloorToInt (time);
+		int m = t / 60;
+		int s = t % 60;
+		timeText.text = string.Format ("{0:D2}:{1:D2}", m, s);
 	}
 
 	void OnApplicationPause(){
