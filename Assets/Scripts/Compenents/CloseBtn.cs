@@ -7,6 +7,8 @@ using System.Collections;
 
 public class CloseBtn : MonoBehaviour {
 
+	[SerializeField]private GameObject parent;
+
 	void Start () {
 		GetComponent<Button> ().onClick.AddListener (delegate {
 			ClosePanel();
@@ -18,6 +20,6 @@ public class CloseBtn : MonoBehaviour {
 	}
 
 	void ClosePanel(){
-		this.transform.parent.gameObject.GetComponent<PanelController> ().SetActive (false);
+		parent.SetActive (false);
 	}
 }

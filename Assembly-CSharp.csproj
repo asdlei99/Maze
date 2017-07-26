@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Compenents\CloseBtn.cs" />
+     <Compile Include="Assets\Scripts\Compenents\Sign.cs" />
      <Compile Include="Assets\Scripts\Compenents\Switch.cs" />
      <Compile Include="Assets\Scripts\Compenents\Toast.cs" />
      <Compile Include="Assets\Scripts\Controllers\LevelTitleController.cs" />
@@ -69,6 +70,7 @@
      <Compile Include="Assets\Scripts\Controllers\Panels\PanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Panels\SelectLevelPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Panels\SettingPanelController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Panels\SignPanelController.cs" />
      <Compile Include="Assets\Scripts\Controllers\RockerController.cs" />
      <Compile Include="Assets\Scripts\Controllers\WallController.cs" />
      <Compile Include="Assets\Scripts\FinishTriggerController.cs" />
